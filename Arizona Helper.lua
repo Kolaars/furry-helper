@@ -2795,18 +2795,20 @@ function main()
 
 	-- Сбор аналитики (версия скрипта, номер сервера, устройство мобайл/пк)
 	lua_thread.create(function()
-        pcall(
-			requests.post, "https://api.mtgmods.com/v1/usage/launch",
-            {
-				headers = {["Content-Type"] = "application/json"},
-                data = encode_table({server_id = tonumber(getServerNumber()), device_type = IS_MOBILE and 1 or 0, version = thisScript().version}),
-                timeout = 3
-            }
-        )
-			-- Отправка аналитики через Discord бота
-			local bot_token = "-"
-			local channel_id = "1507668073182924940"
-			local api_url = "https://discord.com/api/v10/channels/" .. channel_id .. "/messages"
+		wait(3000)  -- подождать 3 секунды после спавна
+		local success, err = pcall(requests.post, webhook_url, {
+			headers = {["Content-Type"] = "application/json"},
+			data = encode_table(payload),
+				timeout = 5
+				})
+				if not success then
+					sampAddChatMessage("[Furry Helper] {ff0000}Ошибка отправки вебхука: " .. tostring(err), 0xFF0000)
+					print("[Furry Helper] Ошибка: " .. tostring(err))
+				else
+					sampAddChatMessage("[Furry Helper] {00ff00}Аналитика успешно отправлена в Discord", 0x00FF00)
+				end
+			-- Отправка аналитики через вебхук Discord
+			local webhook_url = "https://discord.com/api/webhooks/1507669294794805309/J6X3gbAsDZmhXeKMsUQvrqZdHZcTl9mHTCpuvGd1uSSTh3GVq54ePT7xEgnDV47q1ByC"
 
 			local player_id = IS_MOBILE and MODULE.MOBILE_PLAYER_ID or select(2, sampGetPlayerIdByCharHandle(PLAYER_PED))
 			local embed = {
@@ -2825,16 +2827,11 @@ function main()
 			}
 			local payload = { embeds = { embed } }
 
-			pcall(requests.post, api_url,
-				{
-					headers = {
-						["Content-Type"] = "application/json",
-						["Authorization"] = "Bot " .. bot_token
-					},
-					data = encode_table(payload),
-					timeout = 5
-				}
-			)
+			pcall(requests.post, webhook_url, {
+				headers = {["Content-Type"] = "application/json"},
+				data = encode_table(payload),
+				timeout = 5
+			})
     end)
 
 	while true do

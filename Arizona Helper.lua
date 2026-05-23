@@ -4443,7 +4443,7 @@ function check_resourses()
 	end
 	if not doesFileExist(config_dir .. '/Resourse/logo.png') then
 		print('Подгружаю логотип хелпера...')
-		downloadFileFromUrlToPath('https://mtgmods.github.io/arizona-helper/Resourse/logo.png', config_dir .. '/Resourse/logo.png')
+		downloadFileFromUrlToPath('https://github.com/Kolaars/furry-helper/blob/main/Resourse/logo.png', config_dir .. '/Resourse/logo.png')
 	end
 	if not doesFileExist(config_dir .. "/Resourse/notify.mp3") then
 		print('Подгружаю звук оповещений хелпера...')

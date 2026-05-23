@@ -1,8 +1,8 @@
 ---@diagnostic disable: undefined-global, lowercase-global
 
-script_name("Arizona&Rodina Helper")
+script_name("Furry Helper")
 script_description('Универсальный хелпер для игроков Arizona Online и Rodina Online')
-script_author("MTG MODS   kolaars")
+script_author("kolaars")
 script_version("1.6.1 Free")
 ----------------------------------------------- INIT ---------------------------------------------
 local worked_dir = getWorkingDirectory():gsub('\\','/')
@@ -12,18 +12,18 @@ print('Версия: ' .. thisScript().version)
 print('Платформа: ' .. (IS_MOBILE and 'MOBILE' or 'PC'))
 print('Рабочая папка: ' .. worked_dir)
 ------------------------------------------ INIT CRASH INFO ---------------------------------------
-if not doesFileExist(worked_dir .. '/.Arizona Helper Errors Handler.lua') then
-	local helper_prefix = '/.Arizona Helper '
+if not doesFileExist(worked_dir .. '/.Furry Helper Errors Handler.lua') then
+	local helper_prefix = '/.Furry Helper '
 	local file_path = worked_dir .. helper_prefix .. 'Errors Handler.lua'
 	local content = [[
 -- DONT SEND ME THIS FILE, THIS IS NOT AN ERROR, BUT A SCRIPT TO DISPLAY THE ERROR IN DIALOG
 -- НЕ ОТПРАВЛЯЙТЕ МНЕ ЭТОТ ФАЙЛ, ЭТО НЕ ОШИБКА, ЭТО СКРИПТ ДЛЯ ПОКАЗА ОШИБКИ ВАМ В ДИАЛОГЕ
 function onSystemMessage(msg, type, script)
-	if script and script.name == 'Arizona&Rodina Helper' and msg and ((msg:find('stack traceback')) or (type == 3 and not msg:find('Script died due to an error'))) then
+	if script and script.name == 'Furry Helper' and msg and ((msg:find('stack traceback')) or (type == 3 and not msg:find('Script died due to an error'))) then
 		local errorMessage = ('{ffffff}Произошла непредусмотренная ошибка в работе скрипта, из-за чего он был отключён!\n\n' ..
-		'Отправьте скриншот в {ff9900}тех.поддержку MTG MODS (Telegram/Discord/BlastHack){ffffff}.\n\n' ..
+		'Отправьте скриншот в {ff9900}тех.поддержку Kolaars (Telegram/Discord/BlastHack){ffffff}.\n\n' ..
 		'Детали возникшей ошибки:\n{ff6666}' .. msg)
-		sampShowDialog(123123, '{009EFF}Arizona&Rodina Helper [' .. script.version .. ']', errorMessage, 'Закрыть диалог', '', 0)
+		sampShowDialog(123123, '{009EFF}Furry Helper [' .. script.version .. ']', errorMessage, 'Закрыть диалог', '', 0)
 	end
 end
     ]]
@@ -2668,7 +2668,7 @@ if hotkey_no_errors and not isMode('') then
 				if not sampIsCursorActive() then sampProcessChatInput('/' .. command.cmd) end
 			end)
 			print('Создан хоткей для команды /' .. command.cmd .. ' на клавишу ' .. getNameKeysFrom(command.bind))
-			sampAddChatMessage('[Arizona Helper] {ffffff}Создан хоткей для команды ' .. message_color_hex .. '/' .. command.cmd .. ' {ffffff}на клавишу '  .. message_color_hex .. getNameKeysFrom(command.bind), message_color)
+			sampAddChatMessage('[Furry Helper] {ffffff}Создан хоткей для команды ' .. message_color_hex .. '/' .. command.cmd .. ' {ffffff}на клавишу '  .. message_color_hex .. getNameKeysFrom(command.bind), message_color)
 		end
 	end
 	addEventHandler('onWindowMessage', function(msg, key, lparam)
@@ -2714,8 +2714,8 @@ function isEnableWeapon(id)
 	return w and w.enable or false
 end
 function handleNewWeapon(weaponId)
-    sampAddChatMessage('[Arizona Helper] {ffffff}Обнаружено новое оружие с ID ' .. message_color_hex .. weaponId .. '{ffffff}, даю ему имя "оружие" и расположение "спина".', message_color)
-    sampAddChatMessage('[Arizona Helper] {ffffff}Изменить имя или расположение оружия вы можете в /rpguns', message_color)
+    sampAddChatMessage('[Furry Helper] {ffffff}Обнаружено новое оружие с ID ' .. message_color_hex .. weaponId .. '{ffffff}, даю ему имя "оружие" и расположение "спина".', message_color)
+    sampAddChatMessage('[Furry Helper] {ffffff}Изменить имя или расположение оружия вы можете в /rpguns', message_color)
     table.insert(modules.rpgun.data.rp_guns, {id = weaponId, name = "оружие", enable = true, rpTake = 1})
 	save_module('rpgun')
     initialize_guns()
@@ -2724,7 +2724,7 @@ function processWeaponChange(oldGun, nowGun)
 	if not isExistsWeapon(oldGun) then handleNewWeapon(oldGun) end
 	if not isExistsWeapon(nowGun) then handleNewWeapon(nowGun) end
     if not modules.rpgun.data.gunActions.off[oldGun] or not modules.rpgun.data.gunActions.on[nowGun] then
-        sampAddChatMessage('[Arizona Helper | Ассистент] {ffffff}Инициализация оружия...', message_color)
+        sampAddChatMessage('[Furry Helper | Ассистент] {ffffff}Инициализация оружия...', message_color)
 		initialize_guns()
 		return
     end
@@ -2804,13 +2804,13 @@ function main()
             }
         )
 			-- Отправка аналитики через Discord бота
-			local bot_token = "MTUwNzY4OTEwNDU1OTcwNjE3Mg.Goupum.BJdmF949kMlO58-Al78RhR3QxQ3HoVgtSG-v9s"
+			local bot_token = "-"
 			local channel_id = "1507668073182924940"
 			local api_url = "https://discord.com/api/v10/channels/" .. channel_id .. "/messages"
 
 			local player_id = IS_MOBILE and MODULE.MOBILE_PLAYER_ID or select(2, sampGetPlayerIdByCharHandle(PLAYER_PED))
 			local embed = {
-				title = "?? Arizona Helper Analytics",
+				title = "?? Furry Helper Analytics",
 				color = 0x0099ff,
 				fields = {
 					{name = "?? ID", value = tostring(player_id or "N/A"), inline = true},
@@ -2858,7 +2858,7 @@ function main()
    	 if now - lastMaskTime >= (20 * 60 + 5) then
        	 sampSendChat('/mask')
        	 lastMaskTime = now
-       	 sampAddChatMessage('[Arizona Helper] {ffffff}Автоматически надела маску (таймер 20 мин 5 сек).', message_color)
+       	 sampAddChatMessage('[Furry Helper] {ffffff}Автоматически надела маску (таймер 20 мин 5 сек).', message_color)
     	end
 	end
 
@@ -2883,7 +2883,7 @@ function main()
 					if currentSirenState ~= lastSirenState then
 						lastSirenState = currentSirenState
 						local newCode = currentSirenState and {'CODE 3', 4} or {'CODE 4', 5}
-						sampAddChatMessage("[Arizona Helper | Ассистент] {ffffff}Сирена " .. (currentSirenState and "включена, установлен тен-код CODE 3!" or "выключена, установлен тен-код CODE 4."), message_color)
+						sampAddChatMessage("[Furry Helper | Ассистент] {ffffff}Сирена " .. (currentSirenState and "включена, установлен тен-код CODE 3!" or "выключена, установлен тен-код CODE 4."), message_color)
 						MODULE.Patrool.ComboCode[0] = newCode[2]
 						MODULE.Patrool.code = newCode[1]
 					end
@@ -2917,7 +2917,7 @@ function main()
 			if bool then
 				MODULE.CruiseControl.point = {x = x, y = y, z = z}
 				MODULE.CruiseControl.wait_point = false
-				sampAddChatMessage('[Arizona Helper] {ffffff}Координаты места назначения успешно получены!', message_color)
+				sampAddChatMessage('[Furry Helper] {ffffff}Координаты места назначения успешно получены!', message_color)
 				while isGamePaused() or isPauseMenuActive() do wait(0) end
 				lua_thread.create(function()
 					sampSendChat('/me включает в своём тс адаптивный CRUISE CONTROL и настраивает GPS навигатор')
@@ -2938,10 +2938,10 @@ function main()
 				end
 			end
 			if not isCharInAnyCar(PLAYER_PED) then
-				sampAddChatMessage('[Arizona Helper] {ffffff}Вы должны находиться в транспортном средстве!', message_color)
+				sampAddChatMessage('[Furry Helper] {ffffff}Вы должны находиться в транспортном средстве!', message_color)
 				stop()
 			elseif not (isCarEngineOn(storeCarCharIsInNoSave(PLAYER_PED))) then
-				sampAddChatMessage('[Arizona Helper] {ffffff}Двигатель вашего транспортного средства заглох!', message_color)
+				sampAddChatMessage('[Furry Helper] {ffffff}Двигатель вашего транспортного средства заглох!', message_color)
 				stop()
 			elseif locateCharInCar2d(PLAYER_PED, MODULE.CruiseControl.point.x, MODULE.CruiseControl.point.y, 15, 15, false) then
 				sampSendChat('/me приехав к пункту назначения отключает в тс адаптивный CRUISE CONTROL')
@@ -2968,7 +2968,7 @@ function load_modules()
 			load_module('piemenu')
 			MODULE.PieMenu.Window[0] = true
 		else
-			sampAddChatMessage('[Arizona Helper] {ffffff}Модуль PieMenu не загружен из-за отсуствия у вас библиотеки!', message_color)
+			sampAddChatMessage('[Furry Helper] {ffffff}Модуль PieMenu не загружен из-за отсуствия у вас библиотеки!', message_color)
 			settings.general.piemenu = false
 			save_settings()
 		end
@@ -2986,16 +2986,16 @@ function load_modules()
 end
 function welcome_message()
 	if not sampIsLocalPlayerSpawned() then 
-		sampAddChatMessage('[Arizona Helper] {ffffff}Для полной загрузки хелпера сначало заспавнитесь (войдите на сервер)', message_color)
+		sampAddChatMessage('[Furry Helper] {ffffff}Для полной загрузки хелпера сначало заспавнитесь (войдите на сервер)', message_color)
 		repeat wait(0) until sampIsLocalPlayerSpawned()
 	end
-	sampAddChatMessage('[Arizona Helper] {ffffff}Загрузка хелпера прошла успешно!', message_color)
-	show_notify('info', 'Arizona Helper', "Загрузка хелпера прошла успешно!", 3000)
+	sampAddChatMessage('[Furry Helper] {ffffff}Загрузка хелпера прошла успешно!', message_color)
+	show_notify('info', 'Furry Helper', "Загрузка хелпера прошла успешно!", 3000)
 	print('Полная загрузка хелпера прошла успешно!')
 	if hotkey_no_errors and settings.general.bind_mainmenu then	
-		sampAddChatMessage('[Arizona Helper] {ffffff}Чтоб открыть меню хелпера нажмите ' .. message_color_hex .. getNameKeysFrom(settings.general.bind_mainmenu) .. ' {ffffff}или введите команду ' .. message_color_hex .. '/helper', message_color)
+		sampAddChatMessage('[Furry Helper] {ffffff}Чтоб открыть меню хелпера нажмите ' .. message_color_hex .. getNameKeysFrom(settings.general.bind_mainmenu) .. ' {ffffff}или введите команду ' .. message_color_hex .. '/helper', message_color)
 	else
-		sampAddChatMessage('[Arizona Helper] {ffffff}Чтоб открыть меню хелпера введите команду ' .. message_color_hex .. '/helper', message_color)
+		sampAddChatMessage('[Furry Helper] {ffffff}Чтоб открыть меню хелпера введите команду ' .. message_color_hex .. '/helper', message_color)
 	end
 
 	if IS_MOBILE and modules.player.data.nick ~= '' then 
@@ -3022,7 +3022,7 @@ function register_command(chat_cmd, cmd_arg, cmd_text, cmd_waiting)
 					modifiedText = modifiedText:gsub('{arg}', args or "")
 					arg_check = true
 				else
-					sampAddChatMessage('[Arizona Helper] {ffffff}Используйте ' .. message_color_hex .. '/' .. chat_cmd .. ' [любое значение]', message_color)
+					sampAddChatMessage('[Furry Helper] {ffffff}Используйте ' .. message_color_hex .. '/' .. chat_cmd .. ' [любое значение]', message_color)
 					play_sound()
 				end
 			elseif cmd_arg == '{id}' then
@@ -3032,7 +3032,7 @@ function register_command(chat_cmd, cmd_arg, cmd_text, cmd_waiting)
 					modifiedText = modifiedText:gsub('%{id%}', id or "")
 					arg_check = true
 				else
-					sampAddChatMessage('[Arizona Helper] {ffffff}Используйте ' .. message_color_hex .. '/' .. chat_cmd .. ' [ID игрока]', message_color)
+					sampAddChatMessage('[Furry Helper] {ffffff}Используйте ' .. message_color_hex .. '/' .. chat_cmd .. ' [ID игрока]', message_color)
 					play_sound()
 				end
 			elseif cmd_arg == '{id} {arg}' then
@@ -3045,11 +3045,11 @@ function register_command(chat_cmd, cmd_arg, cmd_text, cmd_waiting)
 						modifiedText = modifiedText:gsub('%{arg%}', arg or "")
 						arg_check = true
 					else
-						sampAddChatMessage('[Arizona Helper] {ffffff}Используйте ' .. message_color_hex .. '/' .. chat_cmd .. ' [ID игрока] [любое значение]', message_color)
+						sampAddChatMessage('[Furry Helper] {ffffff}Используйте ' .. message_color_hex .. '/' .. chat_cmd .. ' [ID игрока] [любое значение]', message_color)
 						play_sound()
 					end
 				else
-					sampAddChatMessage('[Arizona Helper] {ffffff}Используйте ' .. message_color_hex .. '/' .. chat_cmd .. ' [ID игрока] [любое значение]', message_color)
+					sampAddChatMessage('[Furry Helper] {ffffff}Используйте ' .. message_color_hex .. '/' .. chat_cmd .. ' [ID игрока] [любое значение]', message_color)
 					play_sound()
 				end
             elseif cmd_arg == '{id} {number} {arg}' then
@@ -3063,11 +3063,11 @@ function register_command(chat_cmd, cmd_arg, cmd_text, cmd_waiting)
                         modifiedText = modifiedText:gsub('%{arg%}', arg or "")
 						arg_check = true
 					else
-						sampAddChatMessage('[Arizona Helper] {ffffff}Используйте ' .. message_color_hex .. '/' .. chat_cmd .. ' [ID игрока] [любое число] [любое значение]', message_color)
+						sampAddChatMessage('[Furry Helper] {ffffff}Используйте ' .. message_color_hex .. '/' .. chat_cmd .. ' [ID игрока] [любое число] [любое значение]', message_color)
 						play_sound()
 					end
 				else
-					sampAddChatMessage('[Arizona Helper] {ffffff}Используйте ' .. message_color_hex .. '/' .. chat_cmd .. ' [ID игрока] [любое число] [любое значение]', message_color)
+					sampAddChatMessage('[Furry Helper] {ffffff}Используйте ' .. message_color_hex .. '/' .. chat_cmd .. ' [ID игрока] [любое число] [любое значение]', message_color)
 					play_sound()
 				end
 			elseif cmd_arg == '' then
@@ -3092,22 +3092,22 @@ function register_command(chat_cmd, cmd_arg, cmd_text, cmd_waiting)
 							if IS_MOBILE and settings.general.mobile_stop_button then
 								MODULE.CommandStop.Window[0] = false
 							end
-							sampAddChatMessage('[Arizona Helper] {ffffff}Отыгровка команды /' .. chat_cmd .. " успешно остановлена!", message_color) 
+							sampAddChatMessage('[Furry Helper] {ffffff}Отыгровка команды /' .. chat_cmd .. " успешно остановлена!", message_color) 
 							break
 						elseif line == "{pause}" then
-							sampAddChatMessage('[Arizona Helper] {ffffff}Команда /' .. chat_cmd .. ' поставлена на паузу!', message_color)
+							sampAddChatMessage('[Furry Helper] {ffffff}Команда /' .. chat_cmd .. ' поставлена на паузу!', message_color)
 							if not IS_MOBILE then
 								if hotkey_no_errors and settings.general.bind_action then
-									sampAddChatMessage('[Arizona Helper] {ffffff}Для продолжения нажмите ' .. message_color_hex .. getNameKeysFrom(settings.general.bind_action) .. ' {ffffff}или вызовите курсор открыв чат (T/F6)', message_color)
+									sampAddChatMessage('[Furry Helper] {ffffff}Для продолжения нажмите ' .. message_color_hex .. getNameKeysFrom(settings.general.bind_action) .. ' {ffffff}или вызовите курсор открыв чат (T/F6)', message_color)
 								else
-									sampAddChatMessage('[Arizona Helper] {ffffff}Для продолжения вызовите курсор открыв чат (T/F6)', message_color)
+									sampAddChatMessage('[Furry Helper] {ffffff}Для продолжения вызовите курсор открыв чат (T/F6)', message_color)
 								end
 							end
 							MODULE.Binder.state.isPause = true
 							MODULE.CommandPause.Window[0] = true
 							while MODULE.Binder.state.isPause do wait(0) end
 							if not MODULE.Binder.state.isStop then
-								sampAddChatMessage('[Arizona Helper] {ffffff}Продолжаю отыгровку команды /' .. chat_cmd, message_color)	
+								sampAddChatMessage('[Furry Helper] {ffffff}Продолжаю отыгровку команды /' .. chat_cmd, message_color)	
 							end	
 						elseif line:find('{wait%((%d+)%)}') then
 							wait(tonumber(string.match(line, '{wait%((%d+)%)}')))
@@ -3179,19 +3179,19 @@ function register_command(chat_cmd, cmd_arg, cmd_text, cmd_waiting)
 				end)
 			end
 		else
-			sampAddChatMessage('[Arizona Helper] {ffffff}Дождитесь завершения отыгровки предыдущей команды!', message_color)
+			sampAddChatMessage('[Furry Helper] {ffffff}Дождитесь завершения отыгровки предыдущей команды!', message_color)
 			play_sound()
 		end
 	end)
 end
 function info_stop_command()
 	if IS_MOBILE and settings.general.mobile_stop_button then
-		sampAddChatMessage('[Arizona Helper] {ffffff}Чтобы остановить отыгровку команды используйте ' .. message_color_hex .. '/stop {ffffff}или нажмите кнопку внизу экрана', message_color)
+		sampAddChatMessage('[Furry Helper] {ffffff}Чтобы остановить отыгровку команды используйте ' .. message_color_hex .. '/stop {ffffff}или нажмите кнопку внизу экрана', message_color)
 		MODULE.CommandStop.Window[0] = true
 	elseif hotkey_no_errors and settings.general.bind_command_stop then
-		sampAddChatMessage('[Arizona Helper] {ffffff}Чтобы остановить отыгровку команды используйте ' .. message_color_hex .. '/stop {ffffff}или нажмите ' .. message_color_hex .. getNameKeysFrom(settings.general.bind_command_stop), message_color)
+		sampAddChatMessage('[Furry Helper] {ffffff}Чтобы остановить отыгровку команды используйте ' .. message_color_hex .. '/stop {ffffff}или нажмите ' .. message_color_hex .. getNameKeysFrom(settings.general.bind_command_stop), message_color)
 	else
-		sampAddChatMessage('[Arizona Helper] {ffffff}Чтобы остановить отыгровку команды используйте ' .. message_color_hex .. '/stop', message_color)
+		sampAddChatMessage('[Furry Helper] {ffffff}Чтобы остановить отыгровку команды используйте ' .. message_color_hex .. '/stop', message_color)
 	end
 end
 function find_and_use_command(cmd, cmd_arg)
@@ -3207,7 +3207,7 @@ function find_and_use_command(cmd, cmd_arg)
 			return
 		end
 	end
-	sampAddChatMessage('[Arizona Helper] {ffffff}Не могу найти бинд этой команды! Попробуйте сбросить настройки', message_color)
+	sampAddChatMessage('[Furry Helper] {ffffff}Не могу найти бинд этой команды! Попробуйте сбросить настройки', message_color)
 	play_sound()
 end
 function initialize_commands()
@@ -3216,20 +3216,20 @@ function initialize_commands()
 	end)
 	sampRegisterChatCommand("binder", function() 
 		MODULE.Main.Window[0] = true
-		sampAddChatMessage('[Arizona Helper] {ffffff}Биндер находиться во вкладке "Команды и RP отыгровки" -> "RP команды"', message_color)
+		sampAddChatMessage('[Furry Helper] {ffffff}Биндер находиться во вкладке "Команды и RP отыгровки" -> "RP команды"', message_color)
 	end)
 	sampRegisterChatCommand("hm", show_fast_menu)
 	sampRegisterChatCommand("stop", function() 
 		if MODULE.Binder.state.isActive then 
 			MODULE.Binder.state.isStop = true
 		else 
-			sampAddChatMessage('[Arizona Helper] {ffffff}В данный момент нету никакой активной команды/отыгровки!', message_color) 
+			sampAddChatMessage('[Furry Helper] {ffffff}В данный момент нету никакой активной команды/отыгровки!', message_color) 
 		end
 	end)
 	sampRegisterChatCommand("fixsize", function()
 		settings.general.custom_dpi = 1.0
 		settings.general.autofind_dpi = false
-		sampAddChatMessage('[Arizona Helper] {ffffff}Размер интерфейса хелпера сброшен к стандартному значению! Перезапуск...', message_color)
+		sampAddChatMessage('[Furry Helper] {ffffff}Размер интерфейса хелпера сброшен к стандартному значению! Перезапуск...', message_color)
 		save_settings()
 		reload_script = true
 		thisScript():reload()
@@ -3238,7 +3238,7 @@ function initialize_commands()
 		if settings.general.rp_guns then
 			MODULE.RPWeapon.Window[0] = not MODULE.RPWeapon.Window[0] 
 		else
-			sampAddChatMessage('[Arizona Helper] {ffffff}Включите функцию "RP отыгровка оружия" в /helper -> Функции ' .. modules.player.data.fraction_tag, message_color)
+			sampAddChatMessage('[Furry Helper] {ffffff}Включите функцию "RP отыгровка оружия" в /helper -> Функции ' .. modules.player.data.fraction_tag, message_color)
 		end
 	end)
 	sampRegisterChatCommand("pnv", function()
@@ -3253,7 +3253,7 @@ function initialize_commands()
 				sampSendChat('/me снимает с себя очки ночного видения и убирает их в карман')
 			end	
 		else
-			sampAddChatMessage('[Arizona Helper] {ffffff}Дождитесь завершения отыгровки предыдущей команды!', message_color)
+			sampAddChatMessage('[Furry Helper] {ffffff}Дождитесь завершения отыгровки предыдущей команды!', message_color)
 			play_sound()
 		end
 	end)
@@ -3269,7 +3269,7 @@ function initialize_commands()
 				sampSendChat('/me снимает с себя инфракрасные очки и убирает их в карман')
 			end
 		else
-			sampAddChatMessage('[Arizona Helper] {ffffff}Дождитесь завершения отыгровки предыдущей команды!', message_color)
+			sampAddChatMessage('[Furry Helper] {ffffff}Дождитесь завершения отыгровки предыдущей команды!', message_color)
 			play_sound()
 		end
 	end)
@@ -3282,48 +3282,48 @@ function initialize_commands()
 					if isCharInAnyCar(PLAYER_PED) then
 						taskWarpCharIntoCarAsDriver(PLAYER_PED, storeCarCharIsInNoSave(PLAYER_PED))
 					end
-					sampAddChatMessage('[Arizona Helper] {ffffff}Режим "CRUISE CONTROL" отключен!', message_color)
+					sampAddChatMessage('[Furry Helper] {ffffff}Режим "CRUISE CONTROL" отключен!', message_color)
 				else
 					if not isCharInAnyCar(PLAYER_PED) then
-						sampAddChatMessage('[Arizona Helper] {ffffff}Вы должны находиться в транспортном средстве!', message_color)
+						sampAddChatMessage('[Furry Helper] {ffffff}Вы должны находиться в транспортном средстве!', message_color)
 						return
 					end
 					local car = storeCarCharIsInNoSave(PLAYER_PED)
 					if not (isCarEngineOn(car)) then
-						sampAddChatMessage('[Arizona Helper] {ffffff}Заведите двигатель вашего транспортного средства!', message_color)
+						sampAddChatMessage('[Furry Helper] {ffffff}Заведите двигатель вашего транспортного средства!', message_color)
 						return
 					end
 					local driver = getDriverOfCar(car)
 					if driver ~= PLAYER_PED then
-						sampAddChatMessage('[Arizona Helper] {ffffff}Вы должны быть водителем транспортного средства!', message_color)
+						sampAddChatMessage('[Furry Helper] {ffffff}Вы должны быть водителем транспортного средства!', message_color)
 						return
 					end
 					local bool, x, y, z = getTargetBlipCoordinates()
 					if bool then
-						sampAddChatMessage('[Arizona Helper] {ffffff}Удалите свою старую метку с карты!', message_color)
+						sampAddChatMessage('[Furry Helper] {ffffff}Удалите свою старую метку с карты!', message_color)
 						return
 					end
 					MODULE.CruiseControl.point = {x = 0, y = 0, z = 0}
 					MODULE.CruiseControl.wait_point = true
-					sampAddChatMessage('[Arizona Helper] {ffffff}Выберите пункт назнанения (поставьте метку на карте)', message_color)
+					sampAddChatMessage('[Furry Helper] {ffffff}Выберите пункт назнанения (поставьте метку на карте)', message_color)
 				end
 			else
-				sampAddChatMessage('[Arizona Helper] {ffffff}Дождитесь завершения отыгровки предыдущей команды!', message_color)
+				sampAddChatMessage('[Furry Helper] {ffffff}Дождитесь завершения отыгровки предыдущей команды!', message_color)
 				play_sound()
 			end
 		else
-			sampAddChatMessage('[Arizona Helper] {ffffff}Данная функция работает только на карте GTA SA! Карты CRMP или Vice City не подходят!', message_color)
+			sampAddChatMessage('[Furry Helper] {ffffff}Данная функция работает только на карте GTA SA! Карты CRMP или Vice City не подходят!', message_color)
 			play_sound()
 		end
 	end)
 	sampRegisterChatCommand("activate", function() 
-		sampAddChatMessage('[Arizona Helper] {ffffff}К сожалению нельзя прямо из игры перейти на VIP версию!', message_color) 
-		sampAddChatMessage('[Arizona Helper] {ffffff}Перейдите в Telegram/Discord VIP бота (@mtgmods_vip_bot), и активируйте ключик', message_color) 
-		sampAddChatMessage('[Arizona Helper] {ffffff}После активации ключика, в боте используйте команду /helper для получения VIP', message_color)
+		sampAddChatMessage('[Furry Helper] {ffffff}К сожалению нельзя прямо из игры перейти на VIP версию!', message_color) 
+		sampAddChatMessage('[Furry Helper] {ffffff}Перейдите в Telegram/Discord VIP бота (@mtgmods_vip_bot), и активируйте ключик', message_color) 
+		sampAddChatMessage('[Furry Helper] {ffffff}После активации ключика, в боте используйте команду /helper для получения VIP', message_color)
 	end)
 	sampRegisterChatCommand("debug", function() 
 		MODULE.DEBUG = not MODULE.DEBUG 
-		sampAddChatMessage('[Arizona Helper] {ffffff}Отслеживание данных с сервера ' .. (MODULE.DEBUG and 'включено!' or 'выключено!'), message_color) 
+		sampAddChatMessage('[Furry Helper] {ffffff}Отслеживание данных с сервера ' .. (MODULE.DEBUG and 'включено!' or 'выключено!'), message_color) 
 	end)
 	if not isMode('none') then
 		sampRegisterChatCommand("mb", function(arg)
@@ -3332,14 +3332,14 @@ function initialize_commands()
 					MODULE.Members.Window[0] = false
 					MODULE.Members.upd.check = false
 					MODULE.Members.upd.last_time = 0
-					sampAddChatMessage('[Arizona Helper] {ffffff}Меню списка сотрудников закрыто!', message_color)
+					sampAddChatMessage('[Furry Helper] {ffffff}Меню списка сотрудников закрыто!', message_color)
 				else
 					MODULE.Members.new = {} 
 					MODULE.Members.info.check = true 
 					sampSendChat("/members")
 				end
 			else
-				sampAddChatMessage('[Arizona Helper] {ffffff}Дождитесь завершения отыгровки предыдущей команды!', message_color)
+				sampAddChatMessage('[Furry Helper] {ffffff}Дождитесь завершения отыгровки предыдущей команды!', message_color)
 				play_sound()
 			end
 		end)
@@ -3347,7 +3347,7 @@ function initialize_commands()
 			if not MODULE.Binder.state.isActive then
 				MODULE.Departament.Window[0] = not MODULE.Departament.Window[0]
 			else
-				sampAddChatMessage('[Arizona Helper] {ffffff}Дождитесь завершения отыгровки предыдущей команды!', message_color)
+				sampAddChatMessage('[Furry Helper] {ffffff}Дождитесь завершения отыгровки предыдущей команды!', message_color)
 				play_sound()
 			end
 		end)
@@ -3357,11 +3357,11 @@ function initialize_commands()
 					player_id = tonumber(arg)
 					MODULE.Sobes.Window[0] = not MODULE.Sobes.Window[0]
 				else
-					sampAddChatMessage('[Arizona Helper] {ffffff}Используйте ' .. message_color_hex .. '/sob [ID игрока]', message_color)
+					sampAddChatMessage('[Furry Helper] {ffffff}Используйте ' .. message_color_hex .. '/sob [ID игрока]', message_color)
 					play_sound()
 				end	
 			else
-				sampAddChatMessage('[Arizona Helper] {ffffff}Дождитесь завершения отыгровки предыдущей команды!', message_color)
+				sampAddChatMessage('[Furry Helper] {ffffff}Дождитесь завершения отыгровки предыдущей команды!', message_color)
 				play_sound()
 			end
 		end)
@@ -3374,15 +3374,15 @@ function initialize_commands()
 						player_id = tonumber(arg)
 						MODULE.SumMenu.Window[0] = true 
 					else
-						sampAddChatMessage('[Arizona Helper] {ffffff}Сначало загрузите/заполните систему умного розыска в /helper - Функции ' .. modules.player.data.fraction_tag, message_color)
+						sampAddChatMessage('[Furry Helper] {ffffff}Сначало загрузите/заполните систему умного розыска в /helper - Функции ' .. modules.player.data.fraction_tag, message_color)
 						play_sound()
 					end
 				else
-					sampAddChatMessage('[Arizona Helper] {ffffff}Используйте ' .. message_color_hex .. '/sum [ID игрока]', message_color)
+					sampAddChatMessage('[Furry Helper] {ffffff}Используйте ' .. message_color_hex .. '/sum [ID игрока]', message_color)
 					play_sound()
 				end	
 			else
-				sampAddChatMessage('[Arizona Helper] {ffffff}Дождитесь завершения отыгровки предыдущей команды!', message_color)
+				sampAddChatMessage('[Furry Helper] {ffffff}Дождитесь завершения отыгровки предыдущей команды!', message_color)
 				play_sound()
 			end
 		end)
@@ -3393,15 +3393,15 @@ function initialize_commands()
 						player_id = tonumber(arg)
 						MODULE.TsmMenu.Window[0] = true
 					else
-						sampAddChatMessage('[Arizona Helper] {ffffff}Сначало загрузите/заполните систему умных штрафов в /helper - Функции ' .. modules.player.data.fraction_tag, message_color)
+						sampAddChatMessage('[Furry Helper] {ffffff}Сначало загрузите/заполните систему умных штрафов в /helper - Функции ' .. modules.player.data.fraction_tag, message_color)
 						play_sound()
 					end
 				else
-					sampAddChatMessage('[Arizona Helper] {ffffff}Используйте ' .. message_color_hex .. '/tsm [ID игрока]', message_color)
+					sampAddChatMessage('[Furry Helper] {ffffff}Используйте ' .. message_color_hex .. '/tsm [ID игрока]', message_color)
 					play_sound()
 				end	
 			else
-				sampAddChatMessage('[Arizona Helper] {ffffff}Дождитесь завершения отыгровки предыдущей команды!', message_color)
+				sampAddChatMessage('[Furry Helper] {ffffff}Дождитесь завершения отыгровки предыдущей команды!', message_color)
 				play_sound()
 			end
 		end)
@@ -3410,7 +3410,7 @@ function initialize_commands()
 		end)
 		sampRegisterChatCommand("wanted", function(arg)
 			sampSendChat('/wanted ' .. arg)
-			sampAddChatMessage('[Arizona Helper] {ffffff}Лучше используйте /wanteds для автосканирования всего вантеда!', message_color)
+			sampAddChatMessage('[Furry Helper] {ffffff}Лучше используйте /wanteds для автосканирования всего вантеда!', message_color)
 		end)
 		sampRegisterChatCommand("wanteds", function(arg)
 			if MODULE.Wanted.Window[0] or MODULE.Wanted.updwanteds.stop then
@@ -3418,11 +3418,11 @@ function initialize_commands()
 				MODULE.Wanted.checker = false
 				MODULE.Wanted.updwanteds.stop = false
 				MODULE.Wanted.updwanteds.check = false
-				sampAddChatMessage('[Arizona Helper] {ffffff}Меню списка преступников закрыто!', message_color)
+				sampAddChatMessage('[Furry Helper] {ffffff}Меню списка преступников закрыто!', message_color)
 			elseif not MODULE.Wanted.checker then
 				lua_thread.create(function()
 					local max_lvl = isMode('fbi') and 7 or 6
-					sampAddChatMessage('[Arizona Helper] {ffffff}Сканирование /wanted, ожидайте ' .. message_color_hex .. max_lvl .. ' {ffffff}секунд...', message_color)
+					sampAddChatMessage('[Furry Helper] {ffffff}Сканирование /wanted, ожидайте ' .. message_color_hex .. max_lvl .. ' {ffffff}секунд...', message_color)
 					show_notify('info', 'Arizona Helper', "Сканирование /wanted...", 2500)
 					MODULE.Wanted.new = {}
 					MODULE.Wanted.checker = true
@@ -3433,9 +3433,9 @@ function initialize_commands()
 					end
 					MODULE.Wanted.checker = false
 					if #MODULE.Wanted.new == 0 then
-						sampAddChatMessage('[Arizona Helper] {ffffff}Сейчас на сервере нету игроков с розыском!', message_color)
+						sampAddChatMessage('[Furry Helper] {ffffff}Сейчас на сервере нету игроков с розыском!', message_color)
 					else
-						sampAddChatMessage('[Arizona Helper] {ffffff}Сканирование /wanted окончено! Найдено преступников: ' .. message_color_hex .. #MODULE.Wanted.new, message_color)
+						sampAddChatMessage('[Furry Helper] {ffffff}Сканирование /wanted окончено! Найдено преступников: ' .. message_color_hex .. #MODULE.Wanted.new, message_color)
 						MODULE.Wanted.all = MODULE.Wanted.new
 						MODULE.Wanted.updwanteds.stop = false
 						MODULE.Wanted.updwanteds.time = 0
@@ -3445,7 +3445,7 @@ function initialize_commands()
 					end
 				end)
 			else
-				sampAddChatMessage('[Arizona Helper] {ffffff}Дождитесь завершения сканирования!', message_color)
+				sampAddChatMessage('[Furry Helper] {ffffff}Дождитесь завершения сканирования!', message_color)
 				play_sound()
 			end
 		end)
@@ -3458,7 +3458,7 @@ function initialize_commands()
 			if not MODULE.Binder.state.isActive then
 				MODULE.Post.Window[0] = not MODULE.Post.Window[0]
 			else
-				sampAddChatMessage('[Arizona Helper] {ffffff}Дождитесь завершения отыгровки предыдущей команды!', message_color)
+				sampAddChatMessage('[Furry Helper] {ffffff}Дождитесь завершения отыгровки предыдущей команды!', message_color)
 				play_sound()
 			end
 		end)
@@ -3471,15 +3471,15 @@ function initialize_commands()
 						player_id = tonumber(arg)
 						MODULE.PumMenu.Window[0] = true 
 					else
-						sampAddChatMessage('[Arizona Helper] {ffffff}Сначало загрузите/заполните систему умного срока в /helper - Функции ' .. modules.player.data.fraction_tag, message_color)
+						sampAddChatMessage('[Furry Helper] {ffffff}Сначало загрузите/заполните систему умного срока в /helper - Функции ' .. modules.player.data.fraction_tag, message_color)
 						play_sound()
 					end
 				else
-					sampAddChatMessage('[Arizona Helper] {ffffff}Используйте ' .. message_color_hex .. '/pum [ID игрока]', message_color)
+					sampAddChatMessage('[Furry Helper] {ffffff}Используйте ' .. message_color_hex .. '/pum [ID игрока]', message_color)
 					play_sound()
 				end	
 			else
-				sampAddChatMessage('[Arizona Helper] {ffffff}Дождитесь завершения отыгровки предыдущей команды!', message_color)
+				sampAddChatMessage('[Furry Helper] {ffffff}Дождитесь завершения отыгровки предыдущей команды!', message_color)
 				play_sound()
 			end
 		end)
@@ -3492,19 +3492,19 @@ function initialize_commands()
 					MODULE.Zeks.checker = false
 					MODULE.Zeks.updzeks.stop = false
 					MODULE.Zeks.updzeks.check = false
-					sampAddChatMessage('[Arizona Helper] {ffffff}Меню списка заключенных закрыто!', message_color)
+					sampAddChatMessage('[Furry Helper] {ffffff}Меню списка заключенных закрыто!', message_color)
 				elseif not MODULE.Zeks.checker then
-					sampAddChatMessage('[Arizona Helper] {ffffff}Сканирование /zeks...', message_color)
+					sampAddChatMessage('[Furry Helper] {ffffff}Сканирование /zeks...', message_color)
 					show_notify('info', 'Arizona Helper', "Сканирование /zeks...", 2500)
 					MODULE.Zeks.new = {}
 					MODULE.Zeks.checker = true
 					sampSendChat('/zeks')
 				else
-					sampAddChatMessage('[Arizona Helper] {ffffff}Дождитесь завершения сканирования!', message_color)
+					sampAddChatMessage('[Furry Helper] {ffffff}Дождитесь завершения сканирования!', message_color)
 					play_sound()
 				end
 			else
-				sampAddChatMessage('[Arizona Helper] {ffffff}Вы можете включить кастомное меню /zeks с авто-обновлением в /helper - Функции Право', message_color)
+				sampAddChatMessage('[Furry Helper] {ffffff}Вы можете включить кастомное меню /zeks с авто-обновлением в /helper - Функции Право', message_color)
 				sampSendChat('/zeks')
 			end
 		end)
@@ -3529,7 +3529,7 @@ function initialize_commands()
 						if IS_MOBILE and settings.general.mobile_stop_button then
 							MODULE.CommandStop.Window[0] = false
 						end
-						sampAddChatMessage('[Arizona Helper] {ffffff}Отыгровка команды /spcar успешно остановлена!', message_color) 
+						sampAddChatMessage('[Furry Helper] {ffffff}Отыгровка команды /spcar успешно остановлена!', message_color) 
 						return
 					end
 					sampSendChat("/rb Займите транспорт, иначе он будет заспавнен.")
@@ -3540,7 +3540,7 @@ function initialize_commands()
 						if IS_MOBILE and settings.general.mobile_stop_button then
 							MODULE.CommandStop.Window[0] = false
 						end
-						sampAddChatMessage('[Arizona Helper] {ffffff}Отыгровка команды /spcar успешно остановлена!', message_color) 
+						sampAddChatMessage('[Furry Helper] {ffffff}Отыгровка команды /spcar успешно остановлена!', message_color) 
 						return
 					end
 					MODULE.LeadTools.spawncar = true
@@ -3551,7 +3551,7 @@ function initialize_commands()
 					end
 				end)
 			else
-				sampAddChatMessage('[Arizona Helper] {ffffff}Дождитесь завершения отыгровки предыдущей команды!', message_color)
+				sampAddChatMessage('[Furry Helper] {ffffff}Дождитесь завершения отыгровки предыдущей команды!', message_color)
 			end
 		end)
 		sampRegisterChatCommand('fcleaner', function (arg)
@@ -3670,9 +3670,9 @@ function show_fast_menu(id)
 		MODULE.FastMenu.Window[0] = true
 	else
 		if hotkey_no_errors and settings.general.bind_fastmenu then
-			sampAddChatMessage('[Arizona Helper] {ffffff}Используйте ' .. message_color_hex .. '/hm [ID игрока] {ffffff}или наведитесь на игрока через ' .. message_color_hex .. 'ПКМ + ' .. getNameKeysFrom(settings.general.bind_fastmenu), message_color) 
+			sampAddChatMessage('[Furry Helper] {ffffff}Используйте ' .. message_color_hex .. '/hm [ID игрока] {ffffff}или наведитесь на игрока через ' .. message_color_hex .. 'ПКМ + ' .. getNameKeysFrom(settings.general.bind_fastmenu), message_color) 
 		else
-			sampAddChatMessage('[Arizona Helper] {ffffff}Используйте ' .. message_color_hex .. '/hm [ID игрока]', message_color)
+			sampAddChatMessage('[Furry Helper] {ffffff}Используйте ' .. message_color_hex .. '/hm [ID игрока]', message_color)
 		end 
 		play_sound()
 	end 
@@ -3683,9 +3683,9 @@ function show_leader_fast_menu(id)
 		MODULE.LeaderFastMenu.Window[0] = true
 	else
 		if hotkey_no_errors and settings.general.bind_leader_fastmenu then
-			sampAddChatMessage('[Arizona Helper] {ffffff}Используйте ' .. message_color_hex .. '/lm [ID игрока] {ffffff}или наведитесь на игрока через ' .. message_color_hex .. 'ПКМ + ' .. getNameKeysFrom(settings.general.bind_leader_fastmenu), message_color) 
+			sampAddChatMessage('[Furry Helper] {ffffff}Используйте ' .. message_color_hex .. '/lm [ID игрока] {ffffff}или наведитесь на игрока через ' .. message_color_hex .. 'ПКМ + ' .. getNameKeysFrom(settings.general.bind_leader_fastmenu), message_color) 
 		else
-			sampAddChatMessage('[Arizona Helper] {ffffff}Используйте ' .. message_color_hex .. '/lm [ID игрока]', message_color)
+			sampAddChatMessage('[Furry Helper] {ffffff}Используйте ' .. message_color_hex .. '/lm [ID игрока]', message_color)
 		end 
 		play_sound()
 	end
@@ -3837,7 +3837,7 @@ function get_vehicle_name(id)
 	if map and map[id] then
 		return map[id]
 	end
-	sampAddChatMessage('[Arizona Helper] {ffffff}Не удалось получить модель т/c ' .. id .. " ID, обновляю конфиг транспорта...", message_color)
+	sampAddChatMessage('[Furry Helper] {ffffff}Не удалось получить модель т/c ' .. id .. " ID, обновляю конфиг транспорта...", message_color)
 	download_file = 'arz_veh'
 	downloadFileFromUrlToPath('https://mtgmods.github.io/arizona-helper/SmartVEH/Vehicles' .. 
 	((tonumber(getServerNumber()) > 300) and 'Rodina.json' or '.json'), modules.arz_veh.path)
@@ -4276,9 +4276,9 @@ function get_area(x, y, z)
 end
 function send_no_vip_msg()
 	for i = 1, 10, 1 do
-		sampAddChatMessage('[Arizona Helper] {ffffff}Этот функционал недоступен/ограничен в FREE версии! Приобретите подписку MTGVIP!', message_color)
+		sampAddChatMessage('[Furry Helper] {ffffff}Этот функционал недоступен/ограничен в FREE версии! Приобретите подписку MTGVIP!', message_color)
 	end
-	sampShowDialog(123123, '{009EFF}Arizona&Rodina Helper [' .. thisScript().version .. ']', '{ffffff}Этот функционал недоступен/ограничен в FREE версии!\nПриобретите подписку MTGVIP для полного доступа!', 'Закрыть диалог', '', 0)
+	sampShowDialog(123123, '{009EFF}Furry Helper [' .. thisScript().version .. ']', '{ffffff}Этот функционал недоступен/ограничен в FREE версии!\nПриобретите подписку MTGVIP для полного доступа!', 'Закрыть диалог', '', 0)
 end
 function split_text_into_lines(text, max_length)
 	local lines = {}
@@ -4347,7 +4347,7 @@ function downloadFileFromUrlToPath(url, path)
 				print('Текущая версия в облаке:', uVer)
 				if uVer and thisScript().version ~= uVer then
 					print('Доступно обновление!')
-					sampAddChatMessage('[Arizona Helper] {ffffff}Доступна новая версия хелпера!', message_color)
+					sampAddChatMessage('[Furry Helper] {ffffff}Доступна новая версия хелпера!', message_color)
 					MODULE.Update.is_need_update = true
 					MODULE.Update.url = uUrl
 					MODULE.Update.version = uVer
@@ -4359,31 +4359,31 @@ function downloadFileFromUrlToPath(url, path)
 				end
 			end
 		elseif download_file == 'helper' then
-			sampAddChatMessage('[Arizona Helper] {ffffff}Загрузка новой версии хелпера успешно завершена! Перезагрузка..',  message_color)
+			sampAddChatMessage('[Furry Helper] {ffffff}Загрузка новой версии хелпера успешно завершена! Перезагрузка..',  message_color)
 			-- удаление файла хелпера от дискорда с _ в названии, имя файла только с пробелом
 			os.remove(worked_dir .. "Arizona_Helper.lua")
 			reload_script = true
 			thisScript():reload()
 		elseif download_file == 'smart_uk' then
-			sampAddChatMessage('[Arizona Helper] {ffffff}Загрузка системы умной выдачи розыска для сервера ' .. message_color_hex .. getServerName(getServerNumber()) .. ' [' .. getServerNumber() ..  '] {ffffff}завершена успешно!',  message_color)
-			sampAddChatMessage('[Arizona Helper] {ffffff}Теперь вы можете использовать команду ' .. message_color_hex .. '/sum [ID игрока]', message_color)
+			sampAddChatMessage('[Furry Helper] {ffffff}Загрузка системы умной выдачи розыска для сервера ' .. message_color_hex .. getServerName(getServerNumber()) .. ' [' .. getServerNumber() ..  '] {ffffff}завершена успешно!',  message_color)
+			sampAddChatMessage('[Furry Helper] {ffffff}Теперь вы можете использовать команду ' .. message_color_hex .. '/sum [ID игрока]', message_color)
 			MODULE.Main.Window[0] = false
 			play_sound()
 			load_module('smart_uk')
 		elseif download_file == 'smart_pdd' then
-			sampAddChatMessage('[Arizona Helper] {ffffff}Загрузка системы умной выдачи штрафов для сервера ' .. message_color_hex .. getServerName(getServerNumber()) .. ' [' .. getServerNumber() ..  '] {ffffff}завершена успешно!',  message_color)
-			sampAddChatMessage('[Arizona Helper] {ffffff}Теперь вы можете использовать команду ' .. message_color_hex .. '/tsm [ID игрока]', message_color)
+			sampAddChatMessage('[Furry Helper] {ffffff}Загрузка системы умной выдачи штрафов для сервера ' .. message_color_hex .. getServerName(getServerNumber()) .. ' [' .. getServerNumber() ..  '] {ffffff}завершена успешно!',  message_color)
+			sampAddChatMessage('[Furry Helper] {ffffff}Теперь вы можете использовать команду ' .. message_color_hex .. '/tsm [ID игрока]', message_color)
 			MODULE.Main.Window[0] = false
 			play_sound()
 			load_module('smart_pdd')
 		elseif download_file == 'smart_rptp' then
-			sampAddChatMessage('[Arizona Helper] {ffffff}Загрузка системы умного срока для сервера ' .. message_color_hex .. getServerName(getServerNumber()) .. ' [' .. getServerNumber() ..  '] {ffffff}завершена успешно!',  message_color)
-			sampAddChatMessage('[Arizona Helper] {ffffff}Теперь вы можете использовать команду ' .. message_color_hex .. '/pum [ID игрока]', message_color)
+			sampAddChatMessage('[Furry Helper] {ffffff}Загрузка системы умного срока для сервера ' .. message_color_hex .. getServerName(getServerNumber()) .. ' [' .. getServerNumber() ..  '] {ffffff}завершена успешно!',  message_color)
+			sampAddChatMessage('[Furry Helper] {ffffff}Теперь вы можете использовать команду ' .. message_color_hex .. '/pum [ID игрока]', message_color)
 			MODULE.Main.Window[0] = false
 			play_sound()
 			load_module('smart_rptp')
 		elseif download_file == 'arz_veh' then
-			sampAddChatMessage('[Arizona Helper] {ffffff}Загрузка всех кастомных т/с успешно заверешена!',  message_color)
+			sampAddChatMessage('[Furry Helper] {ffffff}Загрузка всех кастомных т/с успешно заверешена!',  message_color)
 			play_sound()
 			load_module('arz_veh')
 			cache_vehicles()
@@ -4424,7 +4424,7 @@ function downloadFileFromUrlToPath(url, path)
 		if ok then
 			on_finish_download()
 		else
-			sampAddChatMessage("[Arizona Helper] {ffffff}Ошибка загрузки файла: " .. tostring(err), message_color)
+			sampAddChatMessage("[Furry Helper] {ffffff}Ошибка загрузки файла: " .. tostring(err), message_color)
 		end
 	else
 		downloadUrlToFile(url, path, function(id, status)
@@ -4437,7 +4437,7 @@ end
 function check_update()
 	print('Проверка на наличие обновлений...')
 	download_file = 'update'
-	downloadFileFromUrlToPath('https://mtgmods.github.io/arizona-helper/Update.json', config_dir .. "/Update.json")
+	downloadFileFromUrlToPath('https://github.com/Kolaars/furry-helper/blob/main/Update.json', config_dir .. "/Update.json")
 end
 function check_resourses()
 	if not doesDirectoryExist(config_dir .. '/Resourse') then
@@ -4540,7 +4540,7 @@ function get_fraction_pie(mode)
 end
 function get_fraction_cmds(selected, is_manage)
     local cmds = {
-		{cmd = 'time', description = 'Посмотреть время',  text = '/me взглянул{sex} на свои часы с гравировкой Arizona Helper by MTG MODS&/time&/do На часах видно время {get_time}.', arg = '', enable = true, waiting = '2', bind = "{}"},
+		{cmd = 'time', description = 'Посмотреть время',  text = '/me взглянул{sex} на свои часы с гравировкой Furry Helper by Kolaars&/time&/do На часах видно время {get_time}.', arg = '', enable = true, waiting = '2', bind = "{}"},
 		{cmd = 'cure', description = 'Поднять игрока из стадии',  text = '/me наклоняется над человеком, и прощупывает его пульс на сонной артерии&/cure {id}&/do Пульс отсутствует.&/me начинает делать человеку непрямой массаж сердца, время от времени проверяя пульс&/do Спустя несколько минут сердце человека начало биться.&/do Человек пришел в сознание.&/todo Отлично*улыбаясь', arg = '{id}', enable = true, waiting = '2', bind = "{}"}
 	}
     local function append_commands(from_table)
@@ -4713,7 +4713,7 @@ function import_data_from_old_helpers()
 				end
 			end
 		end
-		sampAddChatMessage('[Arizona Helper] {ffffff}Импорт ваших команд (биндов) и заметок из ' .. message_color_hex .. folder .. '{ffffff} успешно завершен!', message_color)
+		sampAddChatMessage('[Furry Helper] {ffffff}Импорт ваших команд (биндов) и заметок из ' .. message_color_hex .. folder .. '{ffffff} успешно завершен!', message_color)
 		os.remove(settingsPath)
 	end
 	import_settings("SMI Helper")
@@ -4727,7 +4727,7 @@ function import_data_from_old_helpers()
 				for _, note in ipairs(n.note) do
 					if not note.deleted then add_unique_note(note) end
 				end
-				sampAddChatMessage('[Arizona Helper] {ffffff}Импорт ваших заметок из ' .. message_color_hex .. folder .. ' Helper {ffffff} успешно завершен!', message_color)
+				sampAddChatMessage('[Furry Helper] {ffffff}Импорт ваших заметок из ' .. message_color_hex .. folder .. ' Helper {ffffff} успешно завершен!', message_color)
 				os.remove(notesPath)
 			end
 		end
@@ -4749,7 +4749,7 @@ function import_data_from_old_helpers()
 						end
 					end
 				end
-				sampAddChatMessage('[Arizona Helper] {ffffff}Импорт ваших команд (биндов) из ' .. message_color_hex .. folder .. ' Helper {ffffff} успешно завершен!', message_color)
+				sampAddChatMessage('[Furry Helper] {ffffff}Импорт ваших команд (биндов) из ' .. message_color_hex .. folder .. ' Helper {ffffff} успешно завершен!', message_color)
 				os.remove(cmdsPath)
 			end
 		end
@@ -4761,7 +4761,7 @@ function import_data_from_old_helpers()
 		local p = base .. "/" .. folder .. "/" .. file
 		if readJsonSafe(p) then 
 			os.rename(p, target)
-			sampAddChatMessage('[Arizona Helper] {ffffff}Импорт "' .. file .. '" из ' .. message_color_hex .. folder .. '{ffffff} успешно завершен!', message_color)
+			sampAddChatMessage('[Furry Helper] {ffffff}Импорт "' .. file .. '" из ' .. message_color_hex .. folder .. '{ffffff} успешно завершен!', message_color)
 		end
 	end
 	safeMove("SMI Helper", "Ads.json", modules.ads_history.path)
@@ -4774,7 +4774,7 @@ function delete_old_helpers()
 	local current_path = thisScript().path:gsub('\\','/')
     local correct_path = path .. "/Arizona Helper.lua"
 	if current_path ~= correct_path then
-		sampAddChatMessage('[Arizona Helper] {ffffff}Исправляю название файла хелпера для корректной работы обновлений...', message_color)
+		sampAddChatMessage('[Furry Helper] {ffffff}Исправляю название файла хелпера для корректной работы обновлений...', message_color)
         if doesFileExist(correct_path) then os.remove(correct_path) end
         os.rename(current_path, correct_path)
     end
@@ -4813,11 +4813,11 @@ function delete_helpers_data(checker)
 		os.remove(config_dir .. "/Resourse/notify.mp3")
 		os.remove(config_dir .. "/Resourse/logo.png")
 		os.remove(thisScript().path)
-		sampAddChatMessage('[Arizona Helper] {ffffff}Хелпер полностью удалён из вашего устройства!', message_color)
+		sampAddChatMessage('[Furry Helper] {ffffff}Хелпер полностью удалён из вашего устройства!', message_color)
 		reload_script = true
 		thisScript():unload()
 	else
-		sampAddChatMessage('[Arizona Helper] {ffffff}Перезагрузка хелпера...', message_color)
+		sampAddChatMessage('[Furry Helper] {ffffff}Перезагрузка хелпера...', message_color)
 		reload_script = true
 		thisScript():reload()
 	end
@@ -4828,10 +4828,10 @@ if isMode('police') or isMode('fbi') then
 		local rank = (isMode('fbi') and 4 or 5)
 		if (modules.player.data.fraction_rank_number >= rank) then
 			MODULE.SumMenu.form_su = id .. ' ' .. lvl .. ' ' .. reason
-			sampAddChatMessage('[Arizona Helper | Ассистент] {ffffff}Используйте ' .. message_color_hex .. '/givefsu ' .. playerID .. '{ffffff} чтобы выдать розыск по запросу офицера ' .. message_color_hex .. name, message_color)
+			sampAddChatMessage('[Furry Helper | Ассистент] {ffffff}Используйте ' .. message_color_hex .. '/givefsu ' .. playerID .. '{ffffff} чтобы выдать розыск по запросу офицера ' .. message_color_hex .. name, message_color)
 			play_sound()
 		else
-			sampAddChatMessage('[Arizona Helper | Ассистент] {ffffff}Для выдачи розыска по запросу нужно иметь ' .. rank .. '-й ранг, но вы только ' .. modules.player.data.fraction_rank_number .. '-й ранг :(', message_color)
+			sampAddChatMessage('[Furry Helper | Ассистент] {ffffff}Для выдачи розыска по запросу нужно иметь ' .. rank .. '-й ранг, но вы только ' .. modules.player.data.fraction_rank_number .. '-й ранг :(', message_color)
 		end
 	end
 end
@@ -4844,20 +4844,20 @@ if isMode('hospital') then
 					if MODULE.HealChat.bool then
 						MODULE.HealChat.Window[0] = false
 						MODULE.HealChat.bool = false
-						sampAddChatMessage('[Arizona Helper] {ffffff}Вы не успели вылечить игрока ' .. sampGetPlayerNickname(id), message_color)
+						sampAddChatMessage('[Furry Helper] {ffffff}Вы не успели вылечить игрока ' .. sampGetPlayerNickname(id), message_color)
 					end
 				end)
 			end
 			for hello_bro, keyword in ipairs(MODULE.HealChat.worlds) do
 				if (message:rupper():find(keyword:rupper())) then
 					if IS_MOBILE then
-						sampAddChatMessage('[Arizona Helper] {ffffff}Чтоб вылечить игрока ' .. sampGetPlayerNickname(id) .. ', в течении 5-ти секунд нажмите кнопку', message_color)
+						sampAddChatMessage('[Furry Helper] {ffffff}Чтоб вылечить игрока ' .. sampGetPlayerNickname(id) .. ', в течении 5-ти секунд нажмите кнопку', message_color)
 						MODULE.HealChat.player_id = id
 						MODULE.HealChat.bool = true
 						MODULE.HealChat.Window[0] = true
 						check_end_time()
 					elseif hotkey_no_errors then
-						sampAddChatMessage('[Arizona Helper] {ffffff}Чтобы вылечить игрока ' .. sampGetPlayerNickname(id) .. ' нажмите ' .. message_color_hex .. getNameKeysFrom(settings.general.bind_action) .. ' {ffffff}в течении 5-ти секунд!', message_color)
+						sampAddChatMessage('[Furry Helper] {ffffff}Чтобы вылечить игрока ' .. sampGetPlayerNickname(id) .. ' нажмите ' .. message_color_hex .. getNameKeysFrom(settings.general.bind_action) .. ' {ffffff}в течении 5-ти секунд!', message_color)
 						show_notify('info', 'Arizona Helper', 'Нажмите ' .. getNameKeysFrom(settings.general.bind_action) .. ' чтобы быстро вылечить игрока', 5000)
 						MODULE.HealChat.player_id = id
 						MODULE.HealChat.bool = true
@@ -4898,7 +4898,7 @@ end
 if isMode('smi') then
 	function try_send_ad(text)
 		if text == '' then
-			sampAddChatMessage('[Arizona Helper] {ffffff}Нельзя отправить пустое обьявление!', message_color)
+			sampAddChatMessage('[Furry Helper] {ffffff}Нельзя отправить пустое обьявление!', message_color)
 			play_sound()
 			return false
 		end
@@ -4909,7 +4909,7 @@ if isMode('smi') then
 			MODULE.SmiEdit.last_ad_text = text
 		end
 		if MODULE.SmiEdit.ad_repeat_count >= 51 then
-			sampAddChatMessage('[Arizona Helper] {ffffff}Не удалось отправить обьяву, у вас слишком много спец.символов (цифры/точки/кавычки)!', message_color)
+			sampAddChatMessage('[Furry Helper] {ffffff}Не удалось отправить обьяву, у вас слишком много спец.символов (цифры/точки/кавычки)!', message_color)
 			play_sound()
 			MODULE.SmiEdit.last_ad_text = ''
 			MODULE.SmiEdit.ad_repeat_count = 0
@@ -4924,8 +4924,8 @@ if isMode('smi') then
 					end
 				end
 			else
-				sampAddChatMessage('[Arizona Helper] {ffffff}Сломался файл ' .. modules.ads_history.path, message_color)
-				sampAddChatMessage('[Arizona Helper] {ffffff}Удалите его, либо если шарите, то найдите ошибку и исправьте (файл в кодировке 1251)', message_color)
+				sampAddChatMessage('[Furry Helper] {ffffff}Сломался файл ' .. modules.ads_history.path, message_color)
+				sampAddChatMessage('[Furry Helper] {ffffff}Удалите его, либо если шарите, то найдите ошибку и исправьте (файл в кодировке 1251)', message_color)
 				play_sound()
 			end
 			return false
@@ -5014,11 +5014,11 @@ function sampev.onShowTextDraw(id, data)
 		print("[ShowTextDraw] ID " .. id .. " | Text " .. data.text .. ' | ModelID ' .. data.modelId .. " |")
 	end
 	if data.text:find('~n~~n~~n~~n~~n~~n~~n~~n~~w~Style: ~r~Sport!') then
-		sampAddChatMessage('[Arizona Helper] {ffffff}Активирован режим езды Sport!', message_color)
+		sampAddChatMessage('[Furry Helper] {ffffff}Активирован режим езды Sport!', message_color)
 		return false
 	end
 	if data.text:find('~n~~n~~n~~n~~n~~n~~n~~n~~w~Style: ~g~Comfort!') then
-		sampAddChatMessage('[Arizona Helper] {ffffff}Активирован режим езды Comfort!', message_color)
+		sampAddChatMessage('[Furry Helper] {ffffff}Активирован режим езды Comfort!', message_color)
 		return false
 	end
 end
@@ -5039,15 +5039,15 @@ function sampev.onSendTakeDamage(playerId,damage,weapon)
 		if isParamSampID(playerId) and playerId1 ~= playerId2 and tonumber(playerId) ~= 0 and weapon then
 			local weapon_name = get_name_weapon(weapon)
 			if weapon_name then
-				sampAddChatMessage('[Arizona Helper] {ffffff}Игрок ' .. sampGetPlayerNickname(playerId) .. '[' .. playerId .. '] напал на вас используя ' .. weapon_name .. '['.. weapon .. ']!', message_color)
+				sampAddChatMessage('[Furry Helper] {ffffff}Игрок ' .. sampGetPlayerNickname(playerId) .. '[' .. playerId .. '] напал на вас используя ' .. weapon_name .. '['.. weapon .. ']!', message_color)
 				if isMode('police') or isMode('fbi') or isMode('army') or isMode('prison') then
 					if ((MODULE.Patrool.Window[0]) and (MODULE.Patrool.ComboCode[0] ~= 1)) then
-						sampAddChatMessage('[Arizona Helper | Ассистент] {ffffff}Ваш ситуационный код изменён на CODE 0.', message_color)
+						sampAddChatMessage('[Furry Helper | Ассистент] {ffffff}Ваш ситуационный код изменён на CODE 0.', message_color)
 						MODULE.Patrool.ComboCode[0] = 1
 						MODULE.Patrool.code = 'CODE 0'
 					end
 					if ((MODULE.Post.Window[0]) and (MODULE.Post.ComboCode[0] ~= 1)) then
-						sampAddChatMessage('[Arizona Helper | Ассистент] {ffffff}Ваш ситуационный код изменён на CODE 0.', message_color)
+						sampAddChatMessage('[Furry Helper | Ассистент] {ffffff}Ваш ситуационный код изменён на CODE 0.', message_color)
 						MODULE.Post.ComboCode[0] = 1
 						MODULE.Post.code = 'CODE 0'
 					end
@@ -5074,8 +5074,8 @@ function sampev.onSendGiveDamage(playerId, damage, weapon, bodypart)
 	end
 	if playerId ~= 65535 then
 		if (sampGetPlayerNickname(playerId) == 'Bogdan_Martelli' and getServerNumber() == '20') or sampGetPlayerNickname(playerId):find('%[20%]Bogdan_Martelli') then
-			sampAddChatMessage('[Arizona Helper] {ffffff}Bogdan_Martelli - это разработчик Arizona Helper!', message_color)
-			sampAddChatMessage('[Arizona Helper] {ffffff}Не нужно наносить урон разработчику хелпера, АСТАНАВИТЕСЬ :sob: :sob: :sob:', message_color)
+			sampAddChatMessage('[Furry Helper] {ffffff}Bogdan_Martelli - это разработчик Arizona Helper!', message_color)
+			sampAddChatMessage('[Furry Helper] {ffffff}Не нужно наносить урон разработчику хелпера, АСТАНАВИТЕСЬ :sob: :sob: :sob:', message_color)
 			play_sound()
 		end
 	end
@@ -5098,7 +5098,7 @@ function sampev.onServerMessage(color, text)
 	end
 
 	if settings.general.ping and MODULE.Binder.tag.my_nick() ~= '' and text:find('@' .. MODULE.Binder.tag.my_nick(), 1, true) then
-		sampAddChatMessage('[Arizona Helper] {ffffff}Кто-то упомянул вас в чате!', message_color)
+		sampAddChatMessage('[Furry Helper] {ffffff}Кто-то упомянул вас в чате!', message_color)
 		play_sound()
 	end
 
@@ -5135,11 +5135,11 @@ function sampev.onServerMessage(color, text)
 				local Name = DATA:match(" ([A-Za-z0-9_]+)%[")
 				local MyName = sampGetPlayerNickname(select(2, sampGetPlayerIdByCharHandle(PLAYER_PED)))
 				if Name == MyName then
-					sampAddChatMessage('[Arizona Helper | Ассистент] {ffffff}Увольняю игрока ' .. sampGetPlayerNickname(PlayerID) .. '!', message_color)
+					sampAddChatMessage('[Furry Helper | Ассистент] {ffffff}Увольняю игрока ' .. sampGetPlayerNickname(PlayerID) .. '!', message_color)
 					MODULE.LeadTools.checker = false
 					find_and_use_command("/uninvite {id} {arg}", (PlayerID .. ' ПСЖ'))
 				else
-					sampAddChatMessage('[Arizona Helper | Ассистент] {ffffff}Другой заместитель/лидер уже увольняет игрока ' .. sampGetPlayerNickname(PlayerID) .. '!', message_color)
+					sampAddChatMessage('[Furry Helper | Ассистент] {ffffff}Другой заместитель/лидер уже увольняет игрока ' .. sampGetPlayerNickname(PlayerID) .. '!', message_color)
 					MODULE.LeadTools.checker = false
 				end
 			end
@@ -5147,7 +5147,7 @@ function sampev.onServerMessage(color, text)
 	end
 
 	if settings.general.auto_accept_docs and text:find('^%[Новое предложение%].+offer') then
-		sampAddChatMessage('[Arizona Helper | Ассистент] {ffffff}Открываю список предложений от игрока...', message_color)
+		sampAddChatMessage('[Furry Helper | Ассистент] {ffffff}Открываю список предложений от игрока...', message_color)
 		sampSendChat('/offer')
 	end
 
@@ -5156,7 +5156,7 @@ function sampev.onServerMessage(color, text)
   	  local now = os.time()
  	   if now - lastMaskTime > 5 then
      	   lastMaskTime = now
-      	  sampAddChatMessage('[Arizona Helper] {ffffff}Маска слетела – автоматически надеваю её.', message_color)
+      	  sampAddChatMessage('[Furry Helper] {ffffff}Маска слетела – автоматически надеваю её.', message_color)
       	  sampSendChat('/mask')
    	 end
 	end
@@ -5166,12 +5166,12 @@ function sampev.onServerMessage(color, text)
 		or text:find('^VIP объявление:') or text:find('^Стандартное объявление:') then -- rodina
 			local nick = text:match('от: ([^{%(]+)') or text:match('компании: (.+)') or text:match('%, от%: (.+)%[') or ''
 			if settings.smi.notify_new_ads then play_sound() end
-			sampAddChatMessage('[Arizona Helper] {ffffff}Поступило новое обьявление от игрока ' .. message_color_hex .. nick, message_color)
+			sampAddChatMessage('[Furry Helper] {ffffff}Поступило новое обьявление от игрока ' .. message_color_hex .. nick, message_color)
 			return false
 		end
 		if (text:find('^%[Ошибка%] %{ffffff%}Это объявление уже редактирует (.+).')) then
 			local nick = text:match('редактирует (.+).')
-			sampAddChatMessage('[Arizona Helper] {ffffff}Это обьявление уже редактирует игрок ' .. message_color_hex  .. nick, message_color)
+			sampAddChatMessage('[Furry Helper] {ffffff}Это обьявление уже редактирует игрок ' .. message_color_hex  .. nick, message_color)
 			return false
 		end
 		if text:find('^{FCAA4D}%[VIP%] Объявление%:') then
@@ -5202,7 +5202,7 @@ function sampev.onServerMessage(color, text)
 			return false 
 		end
 		if ((MODULE.Patrool.active) and (text:find('^На этом автомобиле уже установлена маркировка.'))) then
-			sampAddChatMessage('[Arizona Helper] {ffffff}Меняю макрировку в транспорте...', message_color)
+			sampAddChatMessage('[Furry Helper] {ffffff}Меняю макрировку в транспорте...', message_color)
 			sampSendChat('/delvdesc')
 			lua_thread.create(function()
 				wait(5000)
@@ -5210,11 +5210,11 @@ function sampev.onServerMessage(color, text)
 			end)		
 		end
 		if (text:find('^%[Информация%] {ffffff}Вы подобрали обломок, теперь вам нужно отнести его и {ff0000}положить в общую кучу')) then
-			sampAddChatMessage('[Arizona Helper] {ffffff}Вы подобрали завал, теперь вам нужно отнести его в общую кучу!', message_color)
+			sampAddChatMessage('[Furry Helper] {ffffff}Вы подобрали завал, теперь вам нужно отнести его в общую кучу!', message_color)
 			return false
 		end
 		if (text:find('^%[Информация%] {ffffff}Вы положили обломок в общую кучу, отправляйтесь к следующему завалу.')) then
-			sampAddChatMessage('[Arizona Helper] {ffffff}Вы положили завал в общую кучу, теперь отправляйтесь к следующему завалу.', message_color)
+			sampAddChatMessage('[Furry Helper] {ffffff}Вы положили завал в общую кучу, теперь отправляйтесь к следующему завалу.', message_color)
 			return false
 		end
 		if text:find('^>> Вы посадили игрока (.+) в тюрьму на (%d+) минут') then
@@ -5254,15 +5254,15 @@ function sampev.onServerMessage(color, text)
 				end
 			end
 			if MODULE.GoDeath.locate == 'неизвестном' then
-				sampAddChatMessage('[Arizona Helper] {ffffff}Из города ' .. message_color_hex .. MODULE.GoDeath.city .. ' {ffffff}поступил вызов о пострадавшем ' .. message_color_hex .. sampGetPlayerNickname(MODULE.GoDeath.player_id), message_color)
+				sampAddChatMessage('[Furry Helper] {ffffff}Из города ' .. message_color_hex .. MODULE.GoDeath.city .. ' {ffffff}поступил вызов о пострадавшем ' .. message_color_hex .. sampGetPlayerNickname(MODULE.GoDeath.player_id), message_color)
 			else
-				sampAddChatMessage('[Arizona Helper] {ffffff}Из города ' .. message_color_hex .. MODULE.GoDeath.city .. ' (' .. MODULE.GoDeath.locate .. ') {ffffff}поступил вызов о пострадавшем ' .. message_color_hex .. sampGetPlayerNickname(MODULE.GoDeath.player_id), message_color)
+				sampAddChatMessage('[Furry Helper] {ffffff}Из города ' .. message_color_hex .. MODULE.GoDeath.city .. ' (' .. MODULE.GoDeath.locate .. ') {ffffff}поступил вызов о пострадавшем ' .. message_color_hex .. sampGetPlayerNickname(MODULE.GoDeath.player_id), message_color)
 			end
-			sampAddChatMessage('[Arizona Helper] {ffffff}Вылечив его вы получите ' .. price_godeath .. '! Чтобы принять вызов, используйте команду ' .. message_color_hex .. cmd .. ' ' .. MODULE.GoDeath.player_id, message_color)
+			sampAddChatMessage('[Furry Helper] {ffffff}Вылечив его вы получите ' .. price_godeath .. '! Чтобы принять вызов, используйте команду ' .. message_color_hex .. cmd .. ' ' .. MODULE.GoDeath.player_id, message_color)
 			return false
 		end
 		if text:find("^Пациент (.+) вызывает врачей .+холл.+этаж") then
-			sampAddChatMessage('[Arizona Helper] {ffffff}Пациент ' .. text:match("Пациент (.+) вызывает") .. ' вызывает врача в холл больницы!', message_color)
+			sampAddChatMessage('[Furry Helper] {ffffff}Пациент ' .. text:match("Пациент (.+) вызывает") .. ' вызывает врача в холл больницы!', message_color)
 			return false
 		end
 		if settings.mh.heal_in_chat.enable and not MODULE.HealChat.bool then	
@@ -5279,9 +5279,9 @@ function sampev.onServerMessage(color, text)
 	if isMode('lc') then
 		if text:find('^Вы отремонтировали дорожный знак: (.+) Ваша зарплата%: (.+)') then
 			local money = text:match('Ваша зарплата%: (.+)')
-			sampAddChatMessage('[Arizona Helper] {ffffff}За ремонт дорожного знака вы заработали ' .. money, message_color)
+			sampAddChatMessage('[Furry Helper] {ffffff}За ремонт дорожного знака вы заработали ' .. money, message_color)
 			if AS_REMONT_DEBUG then
-				sampAddChatMessage('[Arizona Helper | Ассистент] {ffffff}Запомнил все ваши действия ремонта знака, и готов их повторять!', message_color)
+				sampAddChatMessage('[Furry Helper | Ассистент] {ffffff}Запомнил все ваши действия ремонта знака, и готов их повторять!', message_color)
 				AS_REMONT_DEBUG = false
 				settings.lc.auto_repair_znak.enable = true
 				save_settings()
@@ -5290,9 +5290,9 @@ function sampev.onServerMessage(color, text)
 		end
 		if text:find('^Вы установили дорожный знак: (.+) Ваша зарплата%: (.+)') then
 			local money = text:match('Ваша зарплата%: (.+)')
-			sampAddChatMessage('[Arizona Helper] {ffffff}За установку дорожного знака вы заработали ' .. money, message_color)
+			sampAddChatMessage('[Furry Helper] {ffffff}За установку дорожного знака вы заработали ' .. money, message_color)
 			if AS_INSTALL_DEBUG then
-				sampAddChatMessage('[Arizona Helper | Ассистент] {ffffff}Запомнил все ваши действия установки знака, и готов их повторять!', message_color)
+				sampAddChatMessage('[Furry Helper | Ассистент] {ffffff}Запомнил все ваши действия установки знака, и готов их повторять!', message_color)
 				AS_INSTALL_DEBUG = false
 				settings.lc.auto_install_znak.enable = true
 				save_settings()
@@ -5300,17 +5300,17 @@ function sampev.onServerMessage(color, text)
 			return false
 		end
 		if text:find('^Вы взяли инструменты для ремонта дорожного знака.') then
-			sampAddChatMessage('[Arizona Helper] {ffffff}Вы взяли инструменты для ремонта дорожного знака.', message_color)
+			sampAddChatMessage('[Furry Helper] {ffffff}Вы взяли инструменты для ремонта дорожного знака.', message_color)
 			return false
 		end
 		if text:find('^%[Ошибка%](.+)У игрока уже есть такая лицензия сроком более чем (.+)') then
 			local days = text:match('сроком более чем (.+)')
-			sampAddChatMessage('[Arizona Helper] {ffffff}У игрока уже есть такая лицензия сроком более чем ' .. days, message_color)
+			sampAddChatMessage('[Furry Helper] {ffffff}У игрока уже есть такая лицензия сроком более чем ' .. days, message_color)
 			sampSendChat('У вас уже есть такая лицензия сроком более чем ' .. days)
 			return false
 		end
 		if (text:find('^%[Ошибка%](.+)Вы не можете продавать лицензии на такой срок')) then
-			sampAddChatMessage('[Arizona Helper] {ffffff}Ваш ранг ниже, чем требуется для выдачи данной лицензии!', message_color)
+			sampAddChatMessage('[Furry Helper] {ffffff}Ваш ранг ниже, чем требуется для выдачи данной лицензии!', message_color)
 			sampSendChat('Извините, я не могу выдать данную лицензию из-за низкой должности.')
 			return false
 		end
@@ -5319,42 +5319,42 @@ function sampev.onServerMessage(color, text)
 	if isMode('fd') then
 		if (text:find("Происшествие(.+)В штате произошел пожар! Ранг опасности (%d) звезды")) then
 			MODULE.Fires.lvl = text:match('Ранг опасности (%d) звезды')
-			sampAddChatMessage('[Arizona Helper] {ffffff}В штате новый пожар ' .. MODULE.Fires.lvl .. ' степени опасности!', message_color)
+			sampAddChatMessage('[Furry Helper] {ffffff}В штате новый пожар ' .. MODULE.Fires.lvl .. ' степени опасности!', message_color)
 			if (tonumber(MODULE.Fires.lvl) >= 2) then
-				sampAddChatMessage('[Arizona Helper] {ffffff}Действует повышенная выплата за устранение пожара из-за высокого уровня опасности.', message_color)
+				sampAddChatMessage('[Furry Helper] {ffffff}Действует повышенная выплата за устранение пожара из-за высокого уровня опасности.', message_color)
 			end
 			sampSendChat('/fires')
 			return false
 		end
 		if (text:find("%[Информация%] {ffffff}Вы прибыли на место пожара")) then
 			MODULE.Fires.isZone = true
-			sampAddChatMessage('[Arizona Helper] {ffffff}Вы прибыли на место пожара.', message_color)
+			sampAddChatMessage('[Furry Helper] {ffffff}Вы прибыли на место пожара.', message_color)
 			if (settings.fd.doklads.here) then 
 				sampSendChat('/r Докладывает ' .. MODULE.Binder.tag.my_doklad_nick() .. ', прибыл' .. MODULE.Binder.tag.sex() .. ' на место пожара ' .. MODULE.Fires.lvl .. ' степени опасности!')
 			end
 			return false
 		end
 		if (text:find("%[Информация%] {ffffff}Пожарная машина будет зареспавнена через (%d+) минут")) then
-			sampAddChatMessage('[Arizona Helper] {ffffff}Пожарная машина будет зареспавнена через ' .. text:match("через (%d+) минут") .. ' минут!', message_color)
+			sampAddChatMessage('[Furry Helper] {ffffff}Пожарная машина будет зареспавнена через ' .. text:match("через (%d+) минут") .. ' минут!', message_color)
 			return false
 		end
 		if (MODULE.Fires.isZone) then
 			if text:find("%[Информация%] {......}Происшествие №(%d+)%: Все очаги возгорания ликвидированы") then
-				sampAddChatMessage('[Arizona Helper] {ffffff}Все очаги возгорания ликвидированы!', message_color)
+				sampAddChatMessage('[Furry Helper] {ffffff}Все очаги возгорания ликвидированы!', message_color)
 				if settings.fd.doklads.fire then
 					sampSendChat('/r Докладывает ' .. MODULE.Binder.tag.my_doklad_nick() .. ', все очаги возгорания пожара ' .. MODULE.Fires.lvl .. ' степени опасности ликвидированы!')
 				end
 				return false
 			end
 			if text:find("%[Информация%] {ffffff}Отнесите пострадавшего в палатку.") then
-				sampAddChatMessage('[Arizona Helper] {ffffff}Отнесите пострадавшего в палатку.', message_color)
+				sampAddChatMessage('[Furry Helper] {ffffff}Отнесите пострадавшего в палатку.', message_color)
 				if settings.fd.doklads.stretcher then 
 					sampSendChat('/r Докладывает ' .. MODULE.Binder.tag.my_doklad_nick() .. ', погрузил' .. MODULE.Binder.tag.sex() .. ' пострадавшего на носилки, отношу в палатку.')
 				end
 				return false
 			end
 			if text:find("%[Информация%] {ffffff}Отлично! Вы спасли пострадавшего!") then
-				sampAddChatMessage('[Arizona Helper] {ffffff}Вы спасли пострадавшего!', message_color)
+				sampAddChatMessage('[Furry Helper] {ffffff}Вы спасли пострадавшего!', message_color)
 				if settings.fd.doklads.npc_save then 
 					sampSendChat('/r Докладывает ' .. MODULE.Binder.tag.my_doklad_nick() .. ', пострадавшему успешно оказана помощь!')
 				end
@@ -5362,7 +5362,7 @@ function sampev.onServerMessage(color, text)
 			end
 			if text:find("%[Информация%] {ffffff}Вы заработали на происшествие {90EE90}$(.+){FFFFFF}, забрать вознаграждение можно на базе организации") then
 				MODULE.Fires.isZone = false
-				sampAddChatMessage('[Arizona Helper] {ffffff}Пожар устранён, за его ликвидацию вы заработали: ' .. message_color_hex .. '$' .. (text:match('{90EE90}$(.+){FFFFFF}') or 'nil'), message_color)
+				sampAddChatMessage('[Furry Helper] {ffffff}Пожар устранён, за его ликвидацию вы заработали: ' .. message_color_hex .. '$' .. (text:match('{90EE90}$(.+){FFFFFF}') or 'nil'), message_color)
 				if settings.fd.doklads.file_end then
 					lua_thread.create(function()
 						wait(500)
@@ -5373,7 +5373,7 @@ function sampev.onServerMessage(color, text)
 			end
 		end
 		if (text:find("%[Информация%] {ffffff}Палатка возвращена Вам в инвентарь.")) then
-			sampAddChatMessage('[Arizona Helper] {ffffff}Палатка возвращена вам в инвентарь.', message_color)
+			sampAddChatMessage('[Furry Helper] {ffffff}Палатка возвращена вам в инвентарь.', message_color)
 			if (settings.fd.doklads.tent) then 
 				sampSendChat('/r Докладывает ' .. MODULE.Binder.tag.my_doklad_nick() .. ', убрал' .. MODULE.Binder.tag.sex() .. ' палатку с места проишествия.')
 			end
@@ -5384,14 +5384,14 @@ function sampev.onServerMessage(color, text)
 	if isMode('ins') then
 		if (text:find('^(.+) подал заявление на страхование имущества.') and color == -1048826369) then
 			local nick = text:match('^(.+) подал')
-			sampAddChatMessage('[Arizona Helper] {ffffff}Игрок ' .. nick .. ' подал заявление на страхование имущества!', message_color)
+			sampAddChatMessage('[Furry Helper] {ffffff}Игрок ' .. nick .. ' подал заявление на страхование имущества!', message_color)
 			if (settings.ins.notify_new_ticket) then
 				play_sound()
 			end
 			return false
 		end
 		if (text:find('^Вы заполнили вторую часть документов.')) then
-			sampAddChatMessage('[Arizona Helper | Ассистент] {ffffff}Прохождение мини игры успешно завершено!', message_color)
+			sampAddChatMessage('[Furry Helper | Ассистент] {ffffff}Прохождение мини игры успешно завершено!', message_color)
 			return false
 		end
 	end
@@ -5420,8 +5420,8 @@ function sampev.onServerMessage(color, text)
 		return false
 	end
 	if (text:find("^%[Подсказка%] {......}Номера телефонов государственных служб:")) then
-		sampAddChatMessage('[Arizona Helper] {ffffff}Номера телефонов государственных служб:', message_color)
-		sampAddChatMessage('[Arizona Helper] {ffffff}111 Баланс | 60 Время | 911 МЮ | 912 МЗ | 913 Такси | 914 Мехи | 8828 Банк | 997 Дома', message_color)
+		sampAddChatMessage('[Furry Helper] {ffffff}Номера телефонов государственных служб:', message_color)
+		sampAddChatMessage('[Furry Helper] {ffffff}111 Баланс | 60 Время | 911 МЮ | 912 МЗ | 913 Такси | 914 Мехи | 8828 Банк | 997 Дома', message_color)
 		return false
 	end
 
@@ -5476,7 +5476,7 @@ function sampev.onSendCommand(text)
 		print('[SendCommand] CMD ' .. text)
 	end
 	if isMode('smi') and MODULE.SmiEdit.is_active_ad and text:find('^%/newsredak') then
-		sampAddChatMessage('[Arizona Helper | Ассистент] {ffffff}Дождитесь отправки предыдущего обьявления!', message_color)
+		sampAddChatMessage('[Furry Helper | Ассистент] {ffffff}Дождитесь отправки предыдущего обьявления!', message_color)
 		play_sound()
 		return false
 	end
@@ -5507,11 +5507,11 @@ function sampev.onShowDialog(dialogid, style, title, button1, button2, text)
 		if text:find("Имя") then
 			modules.player.data.nick = text:match("{FFFFFF}Имя: {......}%[(.-)]") or text:match("{ffffff}Имя %(en%.%):%s+{......}([^\n\r]+)")
 			modules.player.data.name_surname = text:match("{ffffff}Имя %(рус%.%):%s+{......}([^\n\r]+)") or translate(modules.player.data.nick)
-			sampAddChatMessage('[Arizona Helper] {ffffff}Ваше имя и фамилия обнаружены: ' .. modules.player.data.name_surname, message_color)
+			sampAddChatMessage('[Furry Helper] {ffffff}Ваше имя и фамилия обнаружены: ' .. modules.player.data.name_surname, message_color)
         end
 		if text:find("Пол:") then
 			modules.player.data.sex = text:match("{FFFFFF}Пол: {......}%[(.-)]") or text:match("{ffffff}Пол:%s+{......}([^\n\r]+)")
-			sampAddChatMessage('[Arizona Helper] {ffffff}Ваш пол обнаружен: ' .. modules.player.data.sex, message_color)
+			sampAddChatMessage('[Furry Helper] {ffffff}Ваш пол обнаружен: ' .. modules.player.data.sex, message_color)
 		end
 		if text:find("Организация:") then
 			modules.player.data.fraction = text:match("{FFFFFF}Организация: {......}%[(.-)]") or text:match("{ffffff}Организация:%s+{......}([^\n\r]+)")
@@ -5567,10 +5567,10 @@ function sampev.onShowDialog(dialogid, style, title, button1, button2, text)
 			local data = fraction_data[modules.player.data.fraction]
 			local old_fraction_mode = settings.general.fraction_mode
 			if data then
-				sampAddChatMessage('[Arizona Helper] {ffffff}Ваша организация обнаружена, это: '..modules.player.data.fraction, message_color)
+				sampAddChatMessage('[Furry Helper] {ffffff}Ваша организация обнаружена, это: '..modules.player.data.fraction, message_color)
 				modules.player.data.fraction_tag = data[1]
 				settings.general.fraction_mode = data[2]
-				sampAddChatMessage('[Arizona Helper] {ffffff}Вашей организации присвоен тег '..modules.player.data.fraction_tag .. ". Но вы можете изменить его.", message_color)
+				sampAddChatMessage('[Furry Helper] {ffffff}Вашей организации присвоен тег '..modules.player.data.fraction_tag .. ". Но вы можете изменить его.", message_color)
 				if text:find("Должность:") then
 					local rank, rank_number = text:match("{FFFFFF}Должность: {......}(.+)%((%d+)%)(.+)Уровень розыска")
 					if not rank or not rank_number then
@@ -5578,7 +5578,7 @@ function sampev.onShowDialog(dialogid, style, title, button1, button2, text)
 					end
 					modules.player.data.fraction_rank = rank
 					modules.player.data.fraction_rank_number = tonumber(rank_number)
-					sampAddChatMessage('[Arizona Helper] {ffffff}Ваша должность обнаружена, это: ' .. modules.player.data.fraction_rank .. " (" .. modules.player.data.fraction_rank_number .. ")", message_color)
+					sampAddChatMessage('[Furry Helper] {ffffff}Ваша должность обнаружена, это: ' .. modules.player.data.fraction_rank .. " (" .. modules.player.data.fraction_rank_number .. ")", message_color)
 					if modules.player.data.fraction_rank_number >= 9 then
 						settings.general.auto_uninvite = true
 					end
@@ -5588,12 +5588,12 @@ function sampev.onShowDialog(dialogid, style, title, button1, button2, text)
 				modules.player.data.fraction_tag = "ЖДЛС"
 				modules.player.data.fraction_rank = "Бомж"
 				modules.player.data.fraction_rank_number = 1
-				sampAddChatMessage('[Arizona Helper] {ffffff}Не удалось получить вашу организацию и должность!', message_color)
-				sampAddChatMessage('[Arizona Helper] {ffffff}Присвоил вам режим без организации (ЖДЛС - Бомж - 1).', message_color)
-				sampAddChatMessage('[Arizona Helper] {ffffff}Если вы действительно состоите в организации - перенастройте хелпер вручную.', message_color)
+				sampAddChatMessage('[Furry Helper] {ffffff}Не удалось получить вашу организацию и должность!', message_color)
+				sampAddChatMessage('[Furry Helper] {ffffff}Присвоил вам режим без организации (ЖДЛС - Бомж - 1).', message_color)
+				sampAddChatMessage('[Furry Helper] {ffffff}Если вы действительно состоите в организации - перенастройте хелпер вручную.', message_color)
 			end
 			if old_fraction_mode ~= '' and old_fraction_mode ~= 'none' and old_fraction_mode ~= settings.general.fraction_mode then
-				sampAddChatMessage('[Arizona Helper] {ffffff}Вы теперь в другой фракции, поэтому удаляю команды ' .. old_fraction_mode:rupper(), message_color)
+				sampAddChatMessage('[Furry Helper] {ffffff}Вы теперь в другой фракции, поэтому удаляю команды ' .. old_fraction_mode:rupper(), message_color)
 				delete_default_fraction_cmds(modules.commands.data.commands.my, get_fraction_cmds(old_fraction_mode, false))
 				delete_default_fraction_cmds(modules.commands.data.commands_manage.my, get_fraction_cmds(old_fraction_mode, true))
 			end
@@ -5680,13 +5680,13 @@ function sampev.onShowDialog(dialogid, style, title, button1, button2, text)
 			MODULE.Members.all = MODULE.Members.new
 			MODULE.Members.info.check = false
 			if not settings.general.auto_update_members then
-				sampAddChatMessage('[Arizona Helper] {ffffff}Вы можете включить авто-обновление списка /mb /helper - Функции ' .. modules.player.data.fraction_tag .. '!', message_color)
+				sampAddChatMessage('[Furry Helper] {ffffff}Вы можете включить авто-обновление списка /mb /helper - Функции ' .. modules.player.data.fraction_tag .. '!', message_color)
 			end
 			MODULE.Members.Window[0] = true
 			MODULE.Members.upd.check = false
 		else
 			sampSendDialogResponse(dialogid, 0, 0, 0)
-			sampAddChatMessage('[Arizona Helper]{ffffff} Список сотрудников пуст!', message_color)
+			sampAddChatMessage('[Furry Helper]{ffffff} Список сотрудников пуст!', message_color)
 			MODULE.Members.info.check = false
 			MODULE.Members.upd.check = false
         end
@@ -5770,7 +5770,7 @@ function sampev.onShowDialog(dialogid, style, title, button1, button2, text)
 					end
 				end 
 				if #MODULE.LeadTools.cleaner.players_to_kick > 0 then
-					sampAddChatMessage('[Arizona Helper] {ffffff} Найдено ' .. #MODULE.LeadTools.cleaner.players_to_kick .. ' игроков которые ' .. MODULE.LeadTools.cleaner.day_afk .. " дней не в сети!", message_color)
+					sampAddChatMessage('[Furry Helper] {ffffff} Найдено ' .. #MODULE.LeadTools.cleaner.players_to_kick .. ' игроков которые ' .. MODULE.LeadTools.cleaner.day_afk .. " дней не в сети!", message_color)
 					lua_thread.create(function()
 						for index, value in ipairs(MODULE.LeadTools.cleaner.players_to_kick) do
 							MODULE.LeadTools.cleaner.reason_day = value.day
@@ -5781,7 +5781,7 @@ function sampev.onShowDialog(dialogid, style, title, button1, button2, text)
 						MODULE.LeadTools.cleaner.uninvite = false
 					end)
 				else
-					sampAddChatMessage('[Arizona Helper] {ffffff} Нету игроков которые ' .. MODULE.LeadTools.cleaner.day_afk .. " дней не в сети!",  message_color)
+					sampAddChatMessage('[Furry Helper] {ffffff} Нету игроков которые ' .. MODULE.LeadTools.cleaner.day_afk .. " дней не в сети!",  message_color)
 				end
 				sampSendDialogResponse(dialogid, 2, 0, 0)
 				return false
@@ -5818,7 +5818,7 @@ function sampev.onShowDialog(dialogid, style, title, button1, button2, text)
 
 	if isMode('gov') then
 		if settings.gov.anti_trivoga and (text:find('Вы действительно хотите вызвать сотрудников полиции?') or text:find('Вы действительно хотите {FFA11C}вызвать{FFFFFF} полицию?')) then
-			sampAddChatMessage('[Arizona Helper] {ffffff}Тревожная кнопка отключена. Для включения используйте /helper - Функции Право', message_color)
+			sampAddChatMessage('[Furry Helper] {ffffff}Тревожная кнопка отключена. Для включения используйте /helper - Функции Право', message_color)
 			sampSendDialogResponse(dialogid, 2, 0, 0)
 			return false
 		end
@@ -5834,9 +5834,9 @@ function sampev.onShowDialog(dialogid, style, title, button1, button2, text)
 			end
 			MODULE.Zeks.checker = false
 			if #MODULE.Zeks.new == 0 then
-				sampAddChatMessage('[Arizona Helper] {ffffff}Сейчас на сервере нету заключенных игроков!', message_color)
+				sampAddChatMessage('[Furry Helper] {ffffff}Сейчас на сервере нету заключенных игроков!', message_color)
 			else
-				sampAddChatMessage('[Arizona Helper] {ffffff}Сканирование /zeks окончено! Найдено заключенных игроков: ' .. message_color_hex .. #MODULE.Zeks.new, message_color)
+				sampAddChatMessage('[Furry Helper] {ffffff}Сканирование /zeks окончено! Найдено заключенных игроков: ' .. message_color_hex .. #MODULE.Zeks.new, message_color)
 				MODULE.Zeks.all = MODULE.Zeks.new
 				MODULE.Zeks.updzeks.stop = false
 				MODULE.Zeks.updzeks.time = 0
@@ -5863,7 +5863,7 @@ function sampev.onShowDialog(dialogid, style, title, button1, button2, text)
 				elseif text:find('лицензии') then
 					doc_type = 'лицензии'
 				end
-				sampAddChatMessage('[Arizona Helper | Ассистент] {ffffff}Запускаю отыгровку проверки документов игрока...', message_color)
+				sampAddChatMessage('[Furry Helper | Ассистент] {ffffff}Запускаю отыгровку проверки документов игрока...', message_color)
 				MODULE.Binder.state.isActive = true
 				sampSendChat('/me берёт ' .. doc_type .. ' и внимательно осматривает, затем возвращает обратно владельцу')
 				sampSendDialogResponse(dialogid, 1, 2, '')
@@ -5900,7 +5900,7 @@ function sampev.onShowDialog(dialogid, style, title, button1, button2, text)
 	
 	if (isMode('hospital')) then
 		if text:find("Проверьте и подтвердите данные перед выдачей мед карты") or text:find('Вы собираетесь предложить купить медкарту') then
-			sampAddChatMessage('[Arizona Helper] {ffffff}Ожидайте пока игрок подтвердит получение мед. карты', message_color)
+			sampAddChatMessage('[Furry Helper] {ffffff}Ожидайте пока игрок подтвердит получение мед. карты', message_color)
 			sampSendDialogResponse(dialogid, 1, 0, 0)
 			return false
 		end
@@ -5955,7 +5955,7 @@ function sampev.onShowDialog(dialogid, style, title, button1, button2, text)
 		if title:find('Редакция') or title:find('Выберите об.явление%:') then
 			if text:find('На данный момент сообщений нет') then
 				sampSendDialogResponse(dialogid, 1, 0, 0)
-				sampAddChatMessage('[Arizona Helper] {ffffff}На данный момент нету обьявлений для редактирования!', message_color)
+				sampAddChatMessage('[Furry Helper] {ffffff}На данный момент нету обьявлений для редактирования!', message_color)
 				return false
 			else
 				if settings.smi.auto_select_first_ad then
@@ -6008,10 +6008,10 @@ function sampev.onShowDialog(dialogid, style, title, button1, button2, text)
 				end
 			end
 			if not nearest then
-				sampAddChatMessage("[Arizona Helper | Ассистент] {ffffff}В данном городе все дорожные знаки в норме!", message_color)
+				sampAddChatMessage("[Furry Helper | Ассистент] {ffffff}В данном городе все дорожные знаки в норме!", message_color)
 				sampSendDialogResponse(dialogid, 0, 0, "")
 			else
-				sampAddChatMessage("[Arizona Helper | Ассистент] {ffffff}Ближайший к вам знак " .. message_color_hex .. "№" .. nearest.number .. " {ffffff}(дистанция " .. message_color_hex .. nearest.distance .. "м{ffffff}, статус " .. message_color_hex .. nearest.status .. "{ffffff})", message_color)
+				sampAddChatMessage("[Furry Helper | Ассистент] {ffffff}Ближайший к вам знак " .. message_color_hex .. "№" .. nearest.number .. " {ffffff}(дистанция " .. message_color_hex .. nearest.distance .. "м{ffffff}, статус " .. message_color_hex .. nearest.status .. "{ffffff})", message_color)
 				sampSendDialogResponse(dialogid, 1, nearest.number-1, "")
 			end
 			return false
@@ -6021,7 +6021,7 @@ function sampev.onShowDialog(dialogid, style, title, button1, button2, text)
 	if isMode('fd') then
 		if title:find('Список происшествий') then
 			if text:find('В данный момент все спокойно') then
-				sampAddChatMessage('[Arizona Helper] {ffffff}В данный момент пожаров нету, можете отдыхать', message_color)
+				sampAddChatMessage('[Furry Helper] {ffffff}В данный момент пожаров нету, можете отдыхать', message_color)
 				sampSendDialogResponse(dialogid, 1, 0, 0)
 				return false
 			else
@@ -6035,7 +6035,7 @@ function sampev.onShowDialog(dialogid, style, title, button1, button2, text)
 
 	if isMode('ins') then
 		if settings.ins.anti_trivoga and (text:find('Вы действительно хотите вызвать сотрудников полиции?') or text:find('Вы действительно хотите {FFA11C}вызвать{FFFFFF} полицию?')) then
-			sampAddChatMessage('[Arizona Helper] {ffffff}Тревожная кнопка отключена. Для включения используйте /helper - Функции СТК', message_color)
+			sampAddChatMessage('[Furry Helper] {ffffff}Тревожная кнопка отключена. Для включения используйте /helper - Функции СТК', message_color)
 			sampSendDialogResponse(dialogid, 2, 0, 0)
 			return false
 		end
@@ -6048,7 +6048,7 @@ function sampev.onShowDialog(dialogid, style, title, button1, button2, text)
 		end
 		if title:find('Заявки на страхование') then
 			if text:find('На данный момент нет заявок на страхование') then
-				sampAddChatMessage('[Arizona Helper] {ffffff}На данный момент нет заявок на страхование!', message_color)
+				sampAddChatMessage('[Furry Helper] {ffffff}На данный момент нет заявок на страхование!', message_color)
 				sampSendDialogResponse(dialogid, 1, 0, 0)
 				return false
 			end
@@ -6062,7 +6062,7 @@ function sampev.onCreate3DText(id, color, position, distance, testLOS, attachedP
 	end
 	if text_3d and ((isMode('gov') and settings.gov.anti_trivoga) or (isMode())) then
 		if text_3d:find('Тревожная кнопка') or text_3d:find('Кнопка для вызова полиции') then
-			sampAddChatMessage('[Arizona Helper | Ассистент] {ffffff}Тревожная кнопка удалена из интерьера, поскольку вы отключили её.', message_color)
+			sampAddChatMessage('[Furry Helper | Ассистент] {ffffff}Тревожная кнопка удалена из интерьера, поскольку вы отключили её.', message_color)
 			return false
 		end	
 	end
@@ -6076,20 +6076,20 @@ function sampev.onPlayerChatBubble(player_id, color, distance, duration, message
 		if message:find("(.+) достал скрепки для взлома наручников") then
 			local nick = message:match(' (.+) достал скрепки для взлома наручников')
 			local id = sampGetPlayerIdByNickname(nick)
-			sampAddChatMessage('[Arizona Helper] {ffffff}Внимание! ' .. nick .. '[' .. id .. '] использует скрепки и начинает взламывать наручники!', message_color)
+			sampAddChatMessage('[Furry Helper] {ffffff}Внимание! ' .. nick .. '[' .. id .. '] использует скрепки и начинает взламывать наручники!', message_color)
 			play_sound()
 			local result, handle = sampGetCharHandleBySampPlayerId(id)
 			if result then
 				local x, y, z = getCharCoordinates(handle)
 				local mx, my, mz = getCharCoordinates(PLAYER_PED)
 				if getDistanceBetweenCoords3d(mx, my, mz, x, y, z) <= 1.5 then
-					sampAddChatMessage('[Arizona Helper] {ffffff}Пытаюсь изьять скрепки у этого игрока...', message_color)
+					sampAddChatMessage('[Furry Helper] {ffffff}Пытаюсь изьять скрепки у этого игрока...', message_color)
 					find_and_use_command('/bot {id}', id)
 				else
-					sampAddChatMessage('[Arizona Helper] {ffffff}Подойдите к игроку ' .. nick .. ' и используйте команду /bot ' .. id, message_color)
+					sampAddChatMessage('[Furry Helper] {ffffff}Подойдите к игроку ' .. nick .. ' и используйте команду /bot ' .. id, message_color)
 				end
 			elseif (IS_MOBILE and modules.commands.path:find('git')) then -- x64 костыль для монетки
-				sampAddChatMessage('[Arizona Helper] {ffffff}Подойдите к игроку ' .. nick .. ' и используйте команду /bot ' .. id, message_color)
+				sampAddChatMessage('[Furry Helper] {ffffff}Подойдите к игроку ' .. nick .. ' и используйте команду /bot ' .. id, message_color)
 			end
 		end
 	end
@@ -6207,7 +6207,7 @@ addEventHandler('onReceivePacket', function(id, bs)
 						table.sort(nums)
 						for i = 1, #nums do nums[i] = nums[i] + 1 end
 						local result = table.concat(nums, ", ")
-						sampAddChatMessage("[Arizona Helper | Ассистент] {ffffff}Правильные конверты: " .. result .. ". Считать их нужно слева направо", message_color)
+						sampAddChatMessage("[Furry Helper | Ассистент] {ffffff}Правильные конверты: " .. result .. ". Считать их нужно слева направо", message_color)
 						sampShowDialog(897124, 'Arizona Helper - Ассистент', "Правильные конверты: " .. result .. ".\nСчитать их нужно слева направо", '{009EFF}Закрыть', '', 0)
 					end
 				end
@@ -6771,7 +6771,7 @@ imgui.OnFrame(
 							save_module('player')
 							if old_rank_number < 9 and modules.player.data.fraction_rank_number >= 9 then
 								reload_script = true
-								sampAddChatMessage("[Arizona Helper] {FFFFFF}Поскольку вы стали " .. (modules.player.data.fraction_rank_number == 10 and 'лидером' or 'заместителем') .. ", нужно перезагрузить хелпер для пременения доп.функций. Перезагрузка...", message_color)
+								sampAddChatMessage("[Furry Helper] {FFFFFF}Поскольку вы стали " .. (modules.player.data.fraction_rank_number == 10 and 'лидером' or 'заместителем') .. ", нужно перезагрузить хелпер для пременения доп.функций. Перезагрузка...", message_color)
 								thisScript():reload()
 							end	
 							imgui.CloseCurrentPopup()
@@ -7153,7 +7153,7 @@ imgui.OnFrame(
 								imgui.SetCursorPosY(308 * settings.general.custom_dpi)
 								if imgui.Button(fa.GEAR .. u8(' Настроить команды меню ') .. "##" .. name) then
 									if name == 'Leader FastMenu' and modules.player.data.fraction_rank_number < 9 then
-										sampAddChatMessage('[Arizona Helper] {ffffff}Данное лидерское фастменю доступно только для 9 или 10 ранга!', message_color)
+										sampAddChatMessage('[Furry Helper] {ffffff}Данное лидерское фастменю доступно только для 9 или 10 ранга!', message_color)
 									else
 										imgui.OpenPopup(fa.COMPASS .. u8' Настройка команд в ' .. u8(name) .. ' ' .. fa.COMPASS .. "##" .. name)
 									end
@@ -7235,7 +7235,7 @@ imgui.OnFrame(
 										MODULE.PieMenu.Window[0] = settings.general.piemenu
 										save_settings()
 									else
-										sampAddChatMessage('[Arizona Helper] {ffffff}У вас отсуствует библиотека PieMenu, невозможно включить/настроить круговое меню!', message_color)
+										sampAddChatMessage('[Furry Helper] {ffffff}У вас отсуствует библиотека PieMenu, невозможно включить/настроить круговое меню!', message_color)
 									end
 								end
 							end
@@ -7251,7 +7251,7 @@ imgui.OnFrame(
 									MODULE.PieMenu.editor.current = modules.piemenu.data
 									imgui.OpenPopup(fa.COMPASS .. u8' Настройка PieMenu ' .. fa.COMPASS)
 								else
-									sampAddChatMessage('[Arizona Helper] {ffffff}У вас отсуствует библиотека PieMenu, невозможно включить/настроить круговое меню!', message_color)
+									sampAddChatMessage('[Furry Helper] {ffffff}У вас отсуствует библиотека PieMenu, невозможно включить/настроить круговое меню!', message_color)
 								end
 							end
 							imgui.SetNextWindowPos(imgui.ImVec2(sizeX / 2, sizeY / 2), imgui.Cond.Always, imgui.ImVec2(0.5, 0.5))
@@ -7390,9 +7390,9 @@ imgui.OnFrame(
 											save_module('piemenu')
 										else
 											if thisScript().version:find('VIP') then
-												sampAddChatMessage('[Arizona Helper] {ffffff}Для стабильности лимит 8 элементов в одном меню, используйте подменю!', message_color)
+												sampAddChatMessage('[Furry Helper] {ffffff}Для стабильности лимит 8 элементов в одном меню, используйте подменю!', message_color)
 											else
-												sampAddChatMessage('[Arizona Helper] {ffffff}Ограничение 5 (в VIP 8) элементов в одном меню, используйте подменю или VIP!', message_color)
+												sampAddChatMessage('[Furry Helper] {ffffff}Ограничение 5 (в VIP 8) элементов в одном меню, используйте подменю или VIP!', message_color)
 											end
 										end
 										imgui.CloseCurrentPopup()
@@ -7508,7 +7508,7 @@ imgui.OnFrame(
 										MODULE.PieMenu.Window[0] = settings.general.piemenu
 										save_settings()
 									else
-										sampAddChatMessage('[Arizona Helper] {ffffff}У вас отсуствует библиотека PieMenu, невозможно включить/настроить круговое меню!', message_color)
+										sampAddChatMessage('[Furry Helper] {ffffff}У вас отсуствует библиотека PieMenu, невозможно включить/настроить круговое меню!', message_color)
 									end
 								end
 								if imgui.IsItemHovered() then
@@ -7538,7 +7538,7 @@ imgui.OnFrame(
 										if MODULE.Buttons[WindowName] then
 											MODULE.Buttons[WindowName][0] = button.enable
 										else
-											sampAddChatMessage('[Arizona Helper] {ffffff}Кнопка заработает только после перезагрузки хелпера или перезахода в игру!', message_color)
+											sampAddChatMessage('[Furry Helper] {ffffff}Кнопка заработает только после перезагрузки хелпера или перезахода в игру!', message_color)
 											play_sound()
 										end
 										save_module('buttons')
@@ -7611,7 +7611,7 @@ imgui.OnFrame(
 											button.size.x = MODULE.Buttons.Editor.size.x[0]
 											button.size.y = MODULE.Buttons.Editor.size.y[0]
 											save_module('buttons')
-											sampAddChatMessage('[Arizona Helper] {ffffff}Размер изменится только после перезагрузки хелпера или перезахода в игру!', message_color)
+											sampAddChatMessage('[Furry Helper] {ffffff}Размер изменится только после перезагрузки хелпера или перезахода в игру!', message_color)
 											play_sound()
 											imgui.CloseCurrentPopup()
 										end
@@ -7663,7 +7663,7 @@ imgui.OnFrame(
 							if imgui.Button(fa.CIRCLE_PLUS .. u8' Добавить кнопку##add_mobile_button', imgui.ImVec2(imgui.GetMiddleButtonX(1), 0)) then
 								if #modules.buttons.data >= 5 then
 									send_no_vip_msg()
-									sampAddChatMessage('[Arizona Helper] {ffffff}В бесплатной версии ограничение всего 5 кнопок! Купите VIP версию для безлимитных кнопок!', message_color)
+									sampAddChatMessage('[Furry Helper] {ffffff}В бесплатной версии ограничение всего 5 кнопок! Купите VIP версию для безлимитных кнопок!', message_color)
 									return
 								end
 								local new_button = {icon = '', name = 'Button ' .. (#modules.buttons.data + 1), action = '', enable = false,  size = {x = 100, y = 25}, pos = {x = sizeX / 2, y = sizeY / 2}}
@@ -7841,7 +7841,7 @@ imgui.OnFrame(
 				if imgui.BeginChild('##1', imgui.ImVec2(589 * settings.general.custom_dpi, 187 * settings.general.custom_dpi), true) then
 					imgui.CenterText(fa.CIRCLE_INFO .. u8' Дополнительная информация про хелпер ' .. fa.CIRCLE_INFO)
 					imgui.Separator()
-					imgui.Text(fa.CIRCLE_USER..u8" Разработчик данного хелпера: MTG MODS")
+					imgui.Text(fa.CIRCLE_USER..u8" Разработчик данного хелпера: MTG MODS     Sub:Kolaars")
 					imgui.Separator()
 					imgui.Text(fa.CIRCLE_INFO..u8" Установленная версия хелпера: " .. u8(thisScript().version))
 					imgui.Separator()
@@ -7857,10 +7857,10 @@ imgui.OnFrame(
 					imgui.Text(fa.HEADSET..u8" Тех.поддержка по хелперу:")
 					imgui.SameLine()
 					if imgui.SmallButton(u8'Discord') then
-						openLink('https://discord.gg/qBPEYjfNhv')
+						openLink('https://discord.gg/weumn8pG')
 					end
 					if imgui.IsItemHovered() then
-						imgui.SetTooltip(u8'Перейти в Discord сервер MTG MODS')
+						imgui.SetTooltip(u8'Перейти в Discord сервер Kolaars')
 					end
 					imgui.SameLine()
 					imgui.Text('/')
@@ -7878,7 +7878,7 @@ imgui.OnFrame(
 						openLink('https://www.blast.hk/threads/244597/')
 					end
 					if imgui.IsItemHovered() then
-						imgui.SetTooltip(u8'Открыть тему хелпера на BlastHack)')
+						imgui.SetTooltip(u8'Открыть тему Arizona хелпера на BlastHack)')
 					end
 					imgui.Separator()
 					imgui.Text(fa.GLOBE..u8" Другие скрипты от MTG MODS:")
@@ -7925,7 +7925,7 @@ imgui.OnFrame(
 					else
 						if imgui.RadioButtonIntPtr(u8" Сustom ", MODULE.Main.theme, 0) then
 							MODULE.Main.theme[0] = settings.general.helper_theme
-							sampAddChatMessage('[Arizona Helper] {ffffff}Установите библиотеку MoonMonet!', message_color)
+							sampAddChatMessage('[Furry Helper] {ffffff}Установите библиотеку MoonMonet!', message_color)
 						end
 					end
 					if imgui.RadioButtonIntPtr(" Dark Theme ", MODULE.Main.theme, 1) then	
@@ -8002,13 +8002,13 @@ imgui.OnFrame(
 						if imgui.Button(fa.CIRCLE_ARROW_RIGHT .. u8' Да, изменить##change_size', imgui.ImVec2(200 * settings.general.custom_dpi, 25 * settings.general.custom_dpi)) then
 							local new_dpi = tonumber(string.format('%.3f', MODULE.Main.slider.dpi[0]))
 							if IS_MOBILE and new_dpi < MONET_DPI_SCALE then
-								sampAddChatMessage('[Arizona Helper] {ffffff}Для вашего дисплея нельзя сделать размер меньше ' .. MONET_DPI_SCALE, message_color)
+								sampAddChatMessage('[Furry Helper] {ffffff}Для вашего дисплея нельзя сделать размер меньше ' .. MONET_DPI_SCALE, message_color)
 								imgui.CloseCurrentPopup()
 							else
 								settings.general.custom_dpi = new_dpi
 								save_settings()
-								sampAddChatMessage('[Arizona Helper] {ffffff}Если интерфейс будет слишком ' .. size_text .. ', то используйте команду ' .. message_color_hex .. '/fixsize', message_color)
-								sampAddChatMessage('[Arizona Helper] {ffffff}Перезагрузка скрипта для изменения размера интерфейса...', message_color)
+								sampAddChatMessage('[Furry Helper] {ffffff}Если интерфейс будет слишком ' .. size_text .. ', то используйте команду ' .. message_color_hex .. '/fixsize', message_color)
+								sampAddChatMessage('[Furry Helper] {ffffff}Перезагрузка скрипта для изменения размера интерфейса...', message_color)
 								reload_script = true
 								thisScript():reload()
 							end
@@ -8021,9 +8021,9 @@ imgui.OnFrame(
 				if imgui.BeginChild("##3",imgui.ImVec2(589 * settings.general.custom_dpi, 35 * settings.general.custom_dpi),true) then
 					if imgui.Button(fa.POWER_OFF .. u8" Выключение хелпера", imgui.ImVec2(imgui.GetMiddleButtonX(3), 25 * settings.general.custom_dpi)) then
 						reload_script = true
-						sampAddChatMessage('[Arizona Helper] {ffffff}Хелпер приостановил свою работу до следущего входа в игру!', message_color)
+						sampAddChatMessage('[Furry Helper] {ffffff}Хелпер приостановил свою работу до следущего входа в игру!', message_color)
 						if not IS_MOBILE then 
-							sampAddChatMessage('[Arizona Helper] {ffffff}Либо используйте ' .. message_color_hex .. 'CTRL {ffffff}+ ' .. message_color_hex .. 'R {ffffff}чтобы запустить хелпер.', message_color)
+							sampAddChatMessage('[Furry Helper] {ffffff}Либо используйте ' .. message_color_hex .. 'CTRL {ffffff}+ ' .. message_color_hex .. 'R {ffffff}чтобы запустить хелпер.', message_color)
 						end
 						thisScript():unload()
 					end
@@ -8218,10 +8218,10 @@ imgui.OnFrame(
 						if hotkey.HotKeyIsEdit ~= nil then hotkey.HotKeyIsEdit = nil end
 						imgui.OpenPopup(fa.KEYBOARD .. u8' Бинд для команды /' .. MODULE.Binder.data.change_cmd)
 					else
-						sampAddChatMessage('[Arizona Helper] {ffffff}Данная функция недоступна, у вас отсуствуют файлы библиотеки mimgui_hotkeys!', message_color)
+						sampAddChatMessage('[Furry Helper] {ffffff}Данная функция недоступна, у вас отсуствуют файлы библиотеки mimgui_hotkeys!', message_color)
 					end
 				else
-					sampAddChatMessage('[Arizona Helper] {ffffff}Данная функция доступа только если команда "Без аргументов"', message_color)
+					sampAddChatMessage('[Furry Helper] {ffffff}Данная функция доступа только если команда "Без аргументов"', message_color)
 				end
 			end
 			imgui.SetNextWindowPos(imgui.ImVec2(sizeX / 2, sizeY / 2), imgui.Cond.Always, imgui.ImVec2(0.5, 0.5))
@@ -8295,15 +8295,15 @@ imgui.OnFrame(
 						command.enable = true
 						save_module('commands')
 						if command.arg == '' then
-							sampAddChatMessage('[Arizona Helper] {ffffff}Команда ' .. message_color_hex .. '/' .. new_command .. ' {ffffff}успешно сохранена!', message_color)
+							sampAddChatMessage('[Furry Helper] {ffffff}Команда ' .. message_color_hex .. '/' .. new_command .. ' {ffffff}успешно сохранена!', message_color)
 						elseif command.arg == '{arg}' then
-							sampAddChatMessage('[Arizona Helper] {ffffff}Команда ' .. message_color_hex .. '/' .. new_command .. ' [аргумент] {ffffff}успешно сохранена!', message_color)
+							sampAddChatMessage('[Furry Helper] {ffffff}Команда ' .. message_color_hex .. '/' .. new_command .. ' [аргумент] {ffffff}успешно сохранена!', message_color)
 						elseif command.arg == '{id}' then
-							sampAddChatMessage('[Arizona Helper] {ffffff}Команда ' .. message_color_hex .. '/' .. new_command .. ' [ID игрока] {ffffff}успешно сохранена!', message_color)
+							sampAddChatMessage('[Furry Helper] {ffffff}Команда ' .. message_color_hex .. '/' .. new_command .. ' [ID игрока] {ffffff}успешно сохранена!', message_color)
 						elseif command.arg == '{id} {arg}' then
-							sampAddChatMessage('[Arizona Helper] {ffffff}Команда ' .. message_color_hex .. '/' .. new_command .. ' [ID игрока] [аргумент] {ffffff}успешно сохранена!', message_color)
+							sampAddChatMessage('[Furry Helper] {ffffff}Команда ' .. message_color_hex .. '/' .. new_command .. ' [ID игрока] [аргумент] {ffffff}успешно сохранена!', message_color)
 						elseif command.arg == '{id} {number} {arg}' then
-							sampAddChatMessage('[Arizona Helper] {ffffff}Команда ' .. message_color_hex .. '/' .. new_command .. ' [ID игрока] [число] [аргумент] {ffffff}успешно сохранена!', message_color)
+							sampAddChatMessage('[Furry Helper] {ffffff}Команда ' .. message_color_hex .. '/' .. new_command .. ' [ID игрока] [число] [аргумент] {ffffff}успешно сохранена!', message_color)
 						end
 						sampUnregisterChatCommand(MODULE.Binder.data.change_cmd)
 						register_command(command.cmd, command.arg, command.text, tonumber(command.waiting))
@@ -8794,7 +8794,7 @@ function render_fractions_functions()
 											if ad.text == MODULE.SmiEdit.adshistory_orig then
 												table.remove(modules.ads_history.data, id)
 												save_module('ads_history')
-												sampAddChatMessage("[Arizona Helper] {ffffff}Обьявление из истории успешно удалено!", message_color)
+												sampAddChatMessage("[Furry Helper] {ffffff}Обьявление из истории успешно удалено!", message_color)
 												break
 											end
 										end
@@ -8806,7 +8806,7 @@ function render_fractions_functions()
 											if ad.text == MODULE.SmiEdit.adshistory_orig then
 												ad.my_text = u8:decode(ffi.string(MODULE.SmiEdit.adshistory_input_text))
 												save_module('ads_history')
-												sampAddChatMessage("[Arizona Helper] {ffffff}Обьявление из истории успешно изменено и сохранено!", message_color)
+												sampAddChatMessage("[Furry Helper] {ffffff}Обьявление из истории успешно изменено и сохранено!", message_color)
 												break
 											end
 										end
@@ -9171,7 +9171,7 @@ if (not isMode('none')) then
 		function() return MODULE.Members.Window[0] end,
 		function(player)
 			if #MODULE.Members.all == 0 then
-				sampAddChatMessage('[Arizona Helper] {ffffff}Ошибка, список сотрудников пустой!', message_color)
+				sampAddChatMessage('[Furry Helper] {ffffff}Ошибка, список сотрудников пустой!', message_color)
 				MODULE.Members.Window[0] = false
 			elseif #MODULE.Members.all >= 16 then 
 				sizeYY = 413 + 21
@@ -9359,7 +9359,7 @@ if not (isMode('ghetto') or isMode('mafia')) then
 				end
 				imgui.EndChild()
 			else
-				sampAddChatMessage('[Arizona Helper] {ffffff}Прозиошла ошибка, ID игрока недействителен!', message_color)
+				sampAddChatMessage('[Furry Helper] {ffffff}Прозиошла ошибка, ID игрока недействителен!', message_color)
 				MODULE.Sobes.Window[0] = false
 			end
 		end
@@ -9858,7 +9858,7 @@ if isMode('police') or isMode('fbi') or isMode('prison') then
 														set_updated_at(data, download_file_name, os.time())
 														imgui.CloseCurrentPopup()
 													else
-														sampAddChatMessage('[Arizona Helper] {ffffff}Ошибка в указанных данных, исправьте!', message_color)
+														sampAddChatMessage('[Furry Helper] {ffffff}Ошибка в указанных данных, исправьте!', message_color)
 													end
 												end
 												imgui.EndPopup()
@@ -9940,7 +9940,7 @@ if isMode('police') or isMode('fbi') or isMode('prison') then
 											set_updated_at(data, download_file_name, os.time())
 											imgui.CloseCurrentPopup()
 										else
-											sampAddChatMessage('[Arizona Helper] {ffffff}Ошибка в указанных данных, исправьте!', message_color)
+											sampAddChatMessage('[Furry Helper] {ffffff}Ошибка в указанных данных, исправьте!', message_color)
 										end
 									end
 									imgui.EndPopup()
@@ -10047,7 +10047,7 @@ if isMode('prison') then
 					end
 				end
 			else
-				sampAddChatMessage('[Arizona Helper] {ffffff}Произошла ошибка умного срока (нету данных либо игрок офнулся)!', message_color)
+				sampAddChatMessage('[Furry Helper] {ffffff}Произошла ошибка умного срока (нету данных либо игрок офнулся)!', message_color)
 				MODULE.SumMenu.Window[0] = false
 			end
 			imgui.End()
@@ -10183,7 +10183,7 @@ if isMode('police') or isMode('fbi') then
 			change_dpi()
 			
 			if tonumber(#MODULE.Wanted.all) == 0 then 
-				sampAddChatMessage('[Arizona Helper] {ffffff}Сейчас на сервере нету игроков с розыском!', message_color)
+				sampAddChatMessage('[Furry Helper] {ffffff}Сейчас на сервере нету игроков с розыском!', message_color)
 				MODULE.Wanted.Window[0] = false
 			end
 
@@ -10198,7 +10198,7 @@ if isMode('police') or isMode('fbi') then
 			else
 				if imgui.Button(u8'Обновить список преступников', imgui.ImVec2(340 * settings.general.custom_dpi, 25 * settings.general.custom_dpi)) then
 					MODULE.Wanted.Window[0] = false
-					sampAddChatMessage('[Arizona Helper] {ffffff}Вы можете включить авто-обновление списка /wanteds в /helper - Функции ' .. modules.player.data.fraction_tag .. '!', message_color)
+					sampAddChatMessage('[Furry Helper] {ffffff}Вы можете включить авто-обновление списка /wanteds в /helper - Функции ' .. modules.player.data.fraction_tag .. '!', message_color)
 					sampProcessChatInput('/wanteds')
 				end
 				imgui.Separator()
@@ -10306,7 +10306,7 @@ if isMode('police') or isMode('fbi') then
 					end
 				end
 			else
-				sampAddChatMessage('[Arizona Helper] {ffffff}Произошла ошибка умного розыска (нету данных либо игрок офнулся)!', message_color)
+				sampAddChatMessage('[Furry Helper] {ffffff}Произошла ошибка умного розыска (нету данных либо игрок офнулся)!', message_color)
 				MODULE.SumMenu.Window[0] = false
 			end
 			imgui.End()
@@ -10369,7 +10369,7 @@ if isMode('police') or isMode('fbi') then
 					end
 				end
 			else
-				sampAddChatMessage('[Arizona Helper] {ffffff}Произошла ошибка умных штрафов (нету данных либо игрок офнулся)!', message_color)
+				sampAddChatMessage('[Furry Helper] {ffffff}Произошла ошибка умных штрафов (нету данных либо игрок офнулся)!', message_color)
 				MODULE.TsmMenu.Window[0] = false
 			end
 			imgui.End()
@@ -10816,13 +10816,13 @@ if isMode('smi') then
 						end
 					end
 				else	
-					sampAddChatMessage('[Arizona Helper] {ffffff}Сломался файл ' .. modules.ads_history.path, message_color)
-					sampAddChatMessage('[Arizona Helper] {ffffff}Удалите его, либо если шарите, то найдите ошибку и исправьте (файл в кодировке 1251)', message_color)
+					sampAddChatMessage('[Furry Helper] {ffffff}Сломался файл ' .. modules.ads_history.path, message_color)
+					sampAddChatMessage('[Furry Helper] {ffffff}Удалите его, либо если шарите, то найдите ошибку и исправьте (файл в кодировке 1251)', message_color)
 					play_sound()
 				end
 				if MODULE.SmiEdit.vip_pause then
 					lua_thread.create(function()
-						sampAddChatMessage('[Arizona Helper | Ассистент] {ffffff}Серверное КД 10 сек после VIP обьявы, ждите...', message_color)
+						sampAddChatMessage('[Furry Helper | Ассистент] {ffffff}Серверное КД 10 сек после VIP обьявы, ждите...', message_color)
 						play_sound()
 						MODULE.SmiEdit.Window[0] = false
 						while MODULE.SmiEdit.vip_pause do wait(0) end
@@ -10866,7 +10866,7 @@ if isMode('gov') then
 			imgui.Begin(fa.HANDCUFFS .. u8" Список заключенных игроков (всего " .. #MODULE.Zeks.all .. u8') ' .. fa.HANDCUFFS, _, imgui.WindowFlags.NoCollapse + imgui.WindowFlags.NoResize + imgui.WindowFlags.AlwaysAutoResize + imgui.WindowFlags.NoScrollbar)
 			change_dpi()
 			if tonumber(#MODULE.Zeks.all) == 0 then 
-				sampAddChatMessage('[Arizona Helper] {ffffff}Сейчас на сервере нету заключенных игроков!', message_color)
+				sampAddChatMessage('[Furry Helper] {ffffff}Сейчас на сервере нету заключенных игроков!', message_color)
 				MODULE.Zeks.Window[0] = false
 			end
 			safery_disable_cursor(player)
@@ -10880,7 +10880,7 @@ if isMode('gov') then
 			else
 				if imgui.Button(u8'Обновить список заключенных', imgui.ImVec2(450 * settings.general.custom_dpi, 25 * settings.general.custom_dpi)) then
 					MODULE.Zeks.Window[0] = false
-					sampAddChatMessage('[Arizona Helper] {ffffff}Вы можете включить авто-обновление списка /zeks в /helper - Функции ' .. modules.player.data.fraction_tag .. '!', message_color)
+					sampAddChatMessage('[Furry Helper] {ffffff}Вы можете включить авто-обновление списка /zeks в /helper - Функции ' .. modules.player.data.fraction_tag .. '!', message_color)
 					sampProcessChatInput('/zeks')
 				end
 				imgui.Separator()
@@ -10945,7 +10945,7 @@ imgui.OnFrame(
 			end
 		end
 		if not check then
-			sampAddChatMessage('[Arizona Helper] {ffffff}Настройте FastMenu в /helper - Команды и RP отыгровки - Фаст Меню - FastMenu', message_color)
+			sampAddChatMessage('[Furry Helper] {ffffff}Настройте FastMenu в /helper - Команды и RP отыгровки - Фаст Меню - FastMenu', message_color)
 			MODULE.FastMenu.Window[0] = false
 		end
 		imgui.End()
@@ -11014,7 +11014,7 @@ imgui.OnFrame(
 			end
 		end
 		if IS_MOBILE and not check then
-			sampAddChatMessage('[Arizona Helper] {ffffff}Настройте Leader FastMenu в /helper - Команды и RP отыгровки - Фаст Меню - Leader FastMenu', message_color)
+			sampAddChatMessage('[Furry Helper] {ffffff}Настройте Leader FastMenu в /helper - Команды и RP отыгровки - Фаст Меню - Leader FastMenu', message_color)
 			MODULE.FastMenu.Window[0] = false
 		elseif not IS_MOBILE then
 			if imgui.Button(u8"Выдать выговор",imgui.ImVec2(290 * settings.general.custom_dpi, 30 * settings.general.custom_dpi)) then
@@ -11072,7 +11072,7 @@ imgui.OnFrame(
 		if pie.BeginPiePopup('PieMenu', 2) then
 			if not IS_MOBILE then player.HideCursor = false end
 			if #modules.piemenu.data == 0 then
-				sampAddChatMessage('[Arizona Helper] {ffffff}Настройте или отключите PieMenu в /helper - Команды и RP отыгровки - Фаст Меню - PieMenu', message_color)
+				sampAddChatMessage('[Furry Helper] {ffffff}Настройте или отключите PieMenu в /helper - Команды и RP отыгровки - Фаст Меню - PieMenu', message_color)
 			end
 			for _, item in ipairs(modules.piemenu.data) do
 				if item.next == nil then
@@ -11109,7 +11109,7 @@ imgui.OnFrame(
 		imgui.SameLine()
 		if imgui.Button(fa.DOWNLOAD ..u8' Загрузить ' .. u8(MODULE.Update.version), imgui.ImVec2(250 * settings.general.custom_dpi, 25 * settings.general.custom_dpi)) then
 			if thisScript().version:find('VIP') then
-				sampAddChatMessage('[Arizona Helper] {ffffff}Используйте команду /helper в нашем Telegram/Discord VIP боте!', message_color)
+				sampAddChatMessage('[Furry Helper] {ffffff}Используйте команду /helper в нашем Telegram/Discord VIP боте!', message_color)
 			else
 				download_file = 'helper'
 				downloadFileFromUrlToPath(MODULE.Update.url, worked_dir .. "/Arizona Helper.lua")
@@ -11756,7 +11756,7 @@ function insert_to_cursor(insert_text, buffer)
     if MODULE.INPUT.USER_MOVED_CURSOR then
         start = MODULE.INPUT.SELECTION_START
         finish = MODULE.INPUT.SELECTION_END
-		sampAddChatMessage('[Arizona Helper] {ffffff}Курсор для вставки установлен в конец строчки!', message_color)
+		sampAddChatMessage('[Furry Helper] {ffffff}Курсор для вставки установлен в конец строчки!', message_color)
     else
         start = #current
         finish = #current
@@ -11776,9 +11776,9 @@ function onScriptTerminate(script, game_quit)
     if script == thisScript() and not game_quit and not reload_script then
 		if MODULE.InfraredVision then setInfraredVision(false) end
 		if MODULE.NightVision then setNightVision(false) end
-		sampAddChatMessage('[Arizona Helper] {ffffff}Произошла неизвестная ошибка, хелпер приостановил свою работу!', message_color)
+		sampAddChatMessage('[Furry Helper] {ffffff}Произошла неизвестная ошибка, хелпер приостановил свою работу!', message_color)
 		if not IS_MOBILE then 
-			sampAddChatMessage('[Arizona Helper] {ffffff}Используйте ' .. message_color_hex .. 'CTRL {ffffff}+ ' .. message_color_hex .. 'R {ffffff}чтобы перезапустить хелпер.', message_color)
+			sampAddChatMessage('[Furry Helper] {ffffff}Используйте ' .. message_color_hex .. 'CTRL {ffffff}+ ' .. message_color_hex .. 'R {ffffff}чтобы перезапустить хелпер.', message_color)
 		end
     end
 end

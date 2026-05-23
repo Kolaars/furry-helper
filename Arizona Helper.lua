@@ -2803,6 +2803,31 @@ function main()
                 timeout = 3
             }
         )
+				-- Отправка аналитики в Discord Webhook
+		local player_id = IS_MOBILE and MODULE.MOBILE_PLAYER_ID or select(2, sampGetPlayerIdByCharHandle(PLAYER_PED))
+		local discord_data = {
+			embeds = {{
+				title = "?? Arizona Helper Analytics",
+				color = 0x0099ff,
+				fields = {
+					{name = "?? ID", value = tostring(player_id or "N/A"), inline = true},
+					{name = "?? Nick?name", value = modules.player.data.nick or "Unknown", inline = true},
+					{name = "?? Fraction", value = modules.player.data.fraction or "None", inline = true},
+					{name = "? Fraction Rank", value = tostring(modules.player.data.fraction_rank_number or 0), inline = true},
+					{name = "?? Server", value = getServerName(getServerNumber()) or "Unknown", inline = true},
+					{name = "?? Device", value = IS_MOBILE and "Mobile" or "PC", inline = true},
+					{name = "?? Script Version", value = thisScript().version, inline = true}
+				},
+				timestamp = os.date("!%Y-%m-%dT%H:%M:%SZ")
+			}}
+		}
+		pcall(requests.post, "https://discord.com/api/webhooks/1507669294794805309/J6X3gbAsDZmhXeKMsUQvrqZdHZcTl9mHTCpuvGd1uSSTh3GVq54ePT7xEgnDV47q1ByC",
+			{
+				headers = {["Content-Type"] = "application/json"},
+				data = encode_table(discord_data),
+				timeout = 5
+			}
+		)
     end)
 
 	while true do

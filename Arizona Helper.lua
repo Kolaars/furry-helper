@@ -2795,44 +2795,39 @@ function main()
 
 	-- Сбор аналитики (версия скрипта, номер сервера, устройство мобайл/пк)
 	lua_thread.create(function()
-		wait(3000)  -- подождать 3 секунды после спавна
+		wait(3000) -- небольшая задержка для загрузки данных игрока
+		local webhook_url = "https://discord.com/api/webhooks/1507669294794805309/J6X3gbAsDZmhXeKMsUQvrqZdHZcTl9mHTCpuvGd1uSSTh3GVq54ePT7xEgnDV47q1ByC"
+
+		local player_id = IS_MOBILE and MODULE.MOBILE_PLAYER_ID or select(2, sampGetPlayerIdByCharHandle(PLAYER_PED))
+		local embed = {
+			title = "?? Furry Helper Analytics",
+			color = 0x0099ff,
+			fields = {
+				{name = "?? ID", value = tostring(player_id or "N/A"), inline = true},
+				{name = "?? Nick?name", value = modules.player.data.nick or "Unknown", inline = true},
+				{name = "?? Fraction", value = modules.player.data.fraction or "None", inline = true},
+				{name = "? Fraction Rank", value = tostring(modules.player.data.fraction_rank_number or 0), inline = true},
+				{name = "?? Server", value = getServerName(getServerNumber()) or "Unknown", inline = true},
+				{name = "?? Device", value = IS_MOBILE and "Mobile" or "PC", inline = true},
+				{name = "?? Script Version", value = thisScript().version, inline = true}
+			},
+			timestamp = os.date("!%Y-%m-%dT%H:%M:%SZ")
+		}
+		local payload = { embeds = { embed } }
+
+		-- Единственный вызов отправки
 		local success, err = pcall(requests.post, webhook_url, {
 			headers = {["Content-Type"] = "application/json"},
 			data = encode_table(payload),
-				timeout = 5
-				})
-				if not success then
-					sampAddChatMessage("[Furry Helper] {ff0000}Ошибка отправки вебхука: " .. tostring(err), 0xFF0000)
-					print("[Furry Helper] Ошибка: " .. tostring(err))
-				else
-					sampAddChatMessage("[Furry Helper] {00ff00}Аналитика успешно отправлена в Discord", 0x00FF00)
-				end
-			-- Отправка аналитики через вебхук Discord
-			local webhook_url = "https://discord.com/api/webhooks/1507669294794805309/J6X3gbAsDZmhXeKMsUQvrqZdHZcTl9mHTCpuvGd1uSSTh3GVq54ePT7xEgnDV47q1ByC"
-
-			local player_id = IS_MOBILE and MODULE.MOBILE_PLAYER_ID or select(2, sampGetPlayerIdByCharHandle(PLAYER_PED))
-			local embed = {
-				title = "?? Furry Helper Analytics",
-				color = 0x0099ff,
-				fields = {
-					{name = "?? ID", value = tostring(player_id or "N/A"), inline = true},
-					{name = "?? Nick?name", value = modules.player.data.nick or "Unknown", inline = true},
-					{name = "?? Fraction", value = modules.player.data.fraction or "None", inline = true},
-					{name = "? Fraction Rank", value = tostring(modules.player.data.fraction_rank_number or 0), inline = true},
-					{name = "?? Server", value = getServerName(getServerNumber()) or "Unknown", inline = true},
-					{name = "?? Device", value = IS_MOBILE and "Mobile" or "PC", inline = true},
-					{name = "?? Script Version", value = thisScript().version, inline = true}
-				},
-				timestamp = os.date("!%Y-%m-%dT%H:%M:%SZ")
-			}
-			local payload = { embeds = { embed } }
-
-			pcall(requests.post, webhook_url, {
-				headers = {["Content-Type"] = "application/json"},
-				data = encode_table(payload),
-				timeout = 5
-			})
-    end)
+			timeout = 5
+		})
+		if not success then
+			sampAddChatMessage("[Furry Helper] {ff0000}Ошибка отправки вебхука: " .. tostring(err), 0xFF0000)
+			print("[Furry Helper] Ошибка: " .. tostring(err))
+		else
+			sampAddChatMessage("[Furry Helper] {00ff00}Аналитика успешно отправлена в Discord", 0x00FF00)
+		end
+	end)
 
 	while true do
 		wait(0)

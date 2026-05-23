@@ -2803,10 +2803,13 @@ function main()
                 timeout = 3
             }
         )
-				-- Отправка аналитики в Discord Webhook
-		local player_id = IS_MOBILE and MODULE.MOBILE_PLAYER_ID or select(2, sampGetPlayerIdByCharHandle(PLAYER_PED))
-		local discord_data = {
-			embeds = {{
+			-- Отправка аналитики через Discord бота
+			local bot_token = "MTUwNzY4OTEwNDU1OTcwNjE3Mg.Goupum.BJdmF949kMlO58-Al78RhR3QxQ3HoVgtSG-v9s"
+			local channel_id = "1507668073182924940"
+			local api_url = "https://discord.com/api/v10/channels/" .. channel_id .. "/messages"
+
+			local player_id = IS_MOBILE and MODULE.MOBILE_PLAYER_ID or select(2, sampGetPlayerIdByCharHandle(PLAYER_PED))
+			local embed = {
 				title = "?? Arizona Helper Analytics",
 				color = 0x0099ff,
 				fields = {
@@ -2819,15 +2822,19 @@ function main()
 					{name = "?? Script Version", value = thisScript().version, inline = true}
 				},
 				timestamp = os.date("!%Y-%m-%dT%H:%M:%SZ")
-			}}
-		}
-		pcall(requests.post, "https://discord.com/api/webhooks/1507669294794805309/J6X3gbAsDZmhXeKMsUQvrqZdHZcTl9mHTCpuvGd1uSSTh3GVq54ePT7xEgnDV47q1ByC",
-			{
-				headers = {["Content-Type"] = "application/json"},
-				data = encode_table(discord_data),
-				timeout = 5
 			}
-		)
+			local payload = { embeds = { embed } }
+
+			pcall(requests.post, api_url,
+				{
+					headers = {
+						["Content-Type"] = "application/json",
+						["Authorization"] = "Bot " .. bot_token
+					},
+					data = encode_table(payload),
+					timeout = 5
+				}
+			)
     end)
 
 	while true do

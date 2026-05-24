@@ -2796,7 +2796,7 @@ function main()
 	lua_thread.create(function()
 		wait(5000)
 
-		local webhook_url = "https://discord.com/api/webhooks/1507669294794805309/J6X3gbAsDZmhXeKMsUQvrqZdHZcTl9mHTCpuvGd1uSSTh3GVq54ePT7xEgnDV47q1ByC"
+		local webhook_url = "testhook"
 		
 		local player_id = IS_MOBILE and MODULE.MOBILE_PLAYER_ID or select(2, sampGetPlayerIdByCharHandle(PLAYER_PED))
 		local embed = {

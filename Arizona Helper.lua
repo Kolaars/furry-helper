@@ -3,7 +3,7 @@
 script_name("Furry Helper")
 script_description('????????????? ?????? ??? ??????? Arizona Online ? asdasdRodina Online')
 script_author("kolaars")
-script_version("1.6.1 Free")
+script_version("1.6.2 Kolaars edition")
 ----------------------------------------------- INIT ---------------------------------------------
 local worked_dir = getWorkingDirectory():gsub('\\','/')
 local IS_MOBILE = MONET_VERSION ~= nil
